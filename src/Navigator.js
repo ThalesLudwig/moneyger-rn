@@ -24,6 +24,18 @@ const HomeNavigator = () => {
   );
 };
 
+const OptionsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+      <Screen
+        name="Options"
+        component={Options}
+        options={{ title: "Ajustes" }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 export default function MainNavigator() {
   return (
     <Navigator
@@ -58,7 +70,7 @@ export default function MainNavigator() {
       <Screen name="New" component={New} options={{ title: "Adicionar" }} />
       <Screen
         name="Options"
-        component={Options}
+        component={OptionsNavigator}
         options={{ title: "Ajustes" }}
       />
     </Navigator>

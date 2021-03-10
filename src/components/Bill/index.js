@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, Alert } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { StyleSheet, Alert, TouchableOpacity } from "react-native";
 import Touchable from "../Touchable";
 import COLORS from "../../constants/colors";
 import moment from "moment";
