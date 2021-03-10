@@ -13,6 +13,7 @@ import {
 const InputContainer = ({
   icon,
   iconColor,
+  borderColor,
   placeholder,
   mode,
   keyboardType,
@@ -67,7 +68,7 @@ const InputContainer = ({
 
   return (
     <HelperWrapper>
-      <InputWrapper>
+      <InputWrapper color={borderColor}>
         <InputIcon color={iconColor}>
           <Icon name={icon} />
         </InputIcon>

@@ -88,6 +88,7 @@ const Edit = ({ navigation, route }) => {
             mode="picker"
             icon="check"
             iconColor={statusColor[status.value]}
+            borderColor={statusColor[status.value]}
             placeholder="Status da despesa"
             value={status}
             title="Status"

@@ -8,7 +8,7 @@ import {
 
 export const InputWrapper = styled.View`
   flex-direction: row;
-  border-color: ${COLORS.PRIMARY};
+  border-color: ${({ color }) => (color ? color : COLORS.PRIMARY)};
   border-width: 3px;
   border-radius: 40px;
   align-items: center;
@@ -26,8 +26,7 @@ export const Input = styled.TextInput`
 `;
 
 export const InputIcon = styled.View`
-  background-color: ${({ color }) =>
-    color ? color : COLORS.PRIMARY};
+  background-color: ${({ color }) => (color ? color : COLORS.PRIMARY)};
   height: 60px;
   width: 60px;
   border-radius: 30px;

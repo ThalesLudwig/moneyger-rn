@@ -1,23 +1,37 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { BillsWrapper, Main } from "./HomeStyled";
 import Calendar from "../../components/Calendar";
 import Bill from "../../components/Bill";
 import store from "../../config/store";
 import { remove } from "../../config/billSlice";
-
-import { Text } from "react-native";
+import {
+  BillsWrapper,
+  Main,
+  Empty,
+  EmptyWrapper,
+  EmptyText,
+} from "./HomeStyled";
 
 const Home = ({ bills, navigation }) => {
   const [date, setDate] = useState(moment());
+
+  const renderEmpty = () => {
+    return (
+      <EmptyWrapper>
+        <Empty />
+        <EmptyText>Sem despesas para exibir.</EmptyText>
+        <EmptyText>Adicione algo!</EmptyText>
+      </EmptyWrapper>
+    );
+  };
 
   const renderBills = () => {
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
 
     if (bills.length === 0) {
-      return <Text>Nada aqui</Text>;
+      return renderEmpty();
     }
     const billList = [];
     bills.map((b) => {
