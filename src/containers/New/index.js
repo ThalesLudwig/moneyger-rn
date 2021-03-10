@@ -7,9 +7,11 @@ import store from "../../config/store";
 import {
   SafeContainer,
   Container,
-  Title,
   FormArea,
-  TitleWrapper,
+  MoneyWrapper,
+  Money,
+  MoneyText,
+  Checkmark,
 } from "./NewStyled";
 
 const New = ({ navigation }) => {
@@ -20,26 +22,33 @@ const New = ({ navigation }) => {
   ];
 
   const [title, setTitle] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const submit = () => {
-    const bill = {
-      id: new Date().getUTCMilliseconds(),
-      title: title,
-      amount: 0,
-      status: pickerStatus[0].value,
-      data: {},
-    };
-    store.dispatch(add(bill));
-    setTitle("");
-    navigation.navigate("Home");
+    setHasSubmitted(true);
+    setTimeout(() => {
+      const bill = {
+        id: new Date().getUTCMilliseconds(),
+        title: title,
+        amount: 0,
+        status: pickerStatus[0].value,
+        data: {},
+      };
+      store.dispatch(add(bill));
+      setTitle("");
+      setHasSubmitted(false);
+      navigation.navigate("Home");
+    }, 2000);
   };
 
   return (
     <SafeContainer>
       <Container>
-        <TitleWrapper>
-          <Title>Nova Despesa</Title>
-        </TitleWrapper>
+        <MoneyWrapper>
+          {!hasSubmitted && <Money />}
+          {hasSubmitted && <Checkmark />}
+          <MoneyText>Adicionar Despesa</MoneyText>
+        </MoneyWrapper>
         <FormArea>
           <Input
             icon="file-edit-outline"
@@ -49,7 +58,7 @@ const New = ({ navigation }) => {
           />
           <Button
             onPress={submit}
-            value="REGISTRAR"
+            value="ADICIONAR"
             disabled={title.trim().length === 0}
           />
         </FormArea>
