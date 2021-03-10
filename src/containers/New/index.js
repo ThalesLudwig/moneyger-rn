@@ -38,7 +38,7 @@ const New = ({ navigation }) => {
       setTitle("");
       setHasSubmitted(false);
       navigation.navigate("Home");
-    }, 2000);
+    }, 1500);
   };
 
   return (

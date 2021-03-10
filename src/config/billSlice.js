@@ -2,20 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const BillSlice = createSlice({
   name: "bill",
-  initialState: { bills: [] },
+  initialState: { value: [] },
   reducers: {
     add(state, action) {
-      state.bills.push(action.payload);
+      state.value.push(action.payload);
     },
     remove(state, action) {
-      const bills = [...state.bills];
+      const bills = [...state.value];
       const id = action.payload;
       const index = bills.findIndex((bill) => bill.id === id);
       bills.splice(index, 1);
-      state.bills = bills;
+      state.value = bills;
     },
     edit(state, action) {
-      const bills = [...state.bills];
+      const bills = [...state.value];
       const { newBill, month, year } = action.payload;
       const index = bills.findIndex((bill) => bill.id === newBill.id);
 
@@ -32,10 +32,10 @@ const BillSlice = createSlice({
           ...newBill,
         };
       }
-      state.bills = bills;
+      state.value = bills;
     },
     clear(state) {
-      state.bills = [];
+      state.value = [];
     },
   },
 });

@@ -13,7 +13,7 @@ import {
   EmptyText,
 } from "./HomeStyled";
 
-const Home = ({ bills, navigation }) => {
+const Home = ({ bills, navigation, theme }) => {
   const [date, setDate] = useState(moment());
 
   const renderEmpty = () => {
@@ -30,11 +30,11 @@ const Home = ({ bills, navigation }) => {
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
 
-    if (bills.length === 0) {
+    if (bills.value.length === 0) {
       return renderEmpty();
     }
     const billList = [];
-    bills.map((b) => {
+    bills.value.map((b) => {
       billList.push(
         <Bill
           id={b.id}
@@ -74,7 +74,7 @@ const Home = ({ bills, navigation }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { bills: state.bills };
+  return { bills: state.bills, theme: state.theme };
 };
 
 export default connect(mapStateToProps)(Home);
