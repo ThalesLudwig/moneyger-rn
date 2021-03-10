@@ -1,9 +1,8 @@
 import styled from "styled-components/native";
 import COLORS from "../../constants/colors";
-import SafeDeviceView from "../../components/SafeDeviceView";
 import pencilGif from "../../assets/pencil.gif";
 
-export const Main = styled(SafeDeviceView())`
+export const Main = styled.SafeAreaView`
   flex: 1;
   background-color: ${COLORS.LIGHT};
   padding: 0px;
