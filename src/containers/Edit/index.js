@@ -100,9 +100,7 @@ const Edit = ({ navigation, route }) => {
             <Input
               mode="date"
               icon="calendar-blank"
-              placeholder={
-                receivedOn ? receivedOn.toDateString() : "Recebido em"
-              }
+              placeholder="Recebido em"
               value={receivedOn}
               title="Recebido em"
               onChange={setReceivedOn}
@@ -113,7 +111,7 @@ const Edit = ({ navigation, route }) => {
             <Input
               mode="date"
               icon="calendar-check"
-              placeholder={paidOn ? paidOn.toDateString() : "Pago em"}
+              placeholder="Pago em"
               value={paidOn}
               title="Pago em"
               onChange={setPaidOn}

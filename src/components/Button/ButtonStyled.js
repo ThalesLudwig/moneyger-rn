@@ -28,5 +28,5 @@ export const Icon = styled(MaterialCommunityIcons)`
 
 export const Title = styled.Text`
   color: ${COLORS.WHITE};
-  font-size: 22px;
+  font-size: 16px;
 `;

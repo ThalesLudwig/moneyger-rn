@@ -48,6 +48,7 @@ export default function MainNavigator() {
         },
       })}
       backBehavior="history"
+      labelPosition="below-icon"
     >
       <Screen
         name="Home"

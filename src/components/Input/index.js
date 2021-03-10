@@ -1,4 +1,6 @@
 import React from "react";
+import { TouchableOpacity, Text } from "react-native";
+import moment from "moment";
 import {
   Input,
   InputWrapper,
@@ -40,8 +42,17 @@ const InputContainer = ({
           <DatePicker
             onDateChange={(data) => onChange(data)}
             title={title}
-            placeholder={placeholder}
-            value={value}
+            placeholder={value}
+            locale="pt-BR"
+            iosPickerMode="date"
+            doneText="Adicionar"
+            InputComponent={(e) => (
+              <TouchableOpacity onPress={() => e.togglePicker()} style={{ flex: 1, justifyContent: "center" }}>
+                <Text style={{ paddingLeft: 10 }}>
+                  {!!value ? moment(value, "ddd MMM DD YYYY").format("DD/MM/YYYY") : placeholder}
+                </Text>
+              </TouchableOpacity>
+            )}
           />
         );
       case "picker":
