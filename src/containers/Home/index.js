@@ -1,15 +1,52 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import moment from "moment";
-import {
-  BillsWrapper,
-  Main,
-} from "./HomeStyled";
+import { BillsWrapper, Main } from "./HomeStyled";
 import Calendar from "../../components/Calendar";
 import Bill from "../../components/Bill";
-import STATUS_LIST from "../../constants/status";
+import store from "../../config/store";
+import { remove } from "../../config/billSlice";
 
-export default function Home() {
+import { Text } from "react-native";
+
+const Home = ({ bills, navigation }) => {
   const [date, setDate] = useState(moment());
+
+  const renderBills = () => {
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth() + 1;
+
+    if (bills.length === 0) {
+      return <Text>Nada aqui</Text>;
+    }
+    const billList = [];
+    bills.map((b) => {
+      billList.push(
+        <Bill
+          id={b.id}
+          title={b.title}
+          paidOn={b.data?.[year]?.[month]?.paidOn || null}
+          amount={parseFloat(
+            (b.data?.[year]?.[month]?.amount || "0,00").replace(",", ".")
+          )
+            .toFixed(2)
+            .replace(".", ",")}
+          receivedOn={b.data?.[year]?.[month]?.receivedOn || null}
+          status={b.data?.[year]?.[month]?.status || 0}
+          key={b.id}
+          onRemove={() => store.dispatch(remove(b.id))}
+          onEdit={() =>
+            navigation.navigate("Edit", {
+              bill: b,
+              month,
+              year,
+            })
+          }
+        />
+      );
+    });
+    return billList;
+  };
 
   return (
     <Main>
@@ -17,34 +54,13 @@ export default function Home() {
         onNext={(date) => setDate(date)}
         onPrevious={(date) => setDate(date)}
       />
-      <BillsWrapper>
-        <Bill title="Luz" amount="125,00" status={STATUS_LIST.NOT_RECEIVED} />
-        <Bill
-          title="Aluguel"
-          paidOn="01/03/2021"
-          amount="1405,20"
-          receivedOn="21/02/2021"
-          status={STATUS_LIST.PAID}
-        />
-        <Bill title="Água" status={STATUS_LIST.NOT_RECEIVED} />
-        <Bill
-          title="Internet"
-          amount="100,00"
-          receivedOn="21/02/2021"
-          status={STATUS_LIST.RECEIVED}
-        />
-        <Bill title="Faculdade" paidOn="01/03/2021" status={STATUS_LIST.PAID} />
-        <Bill title="Netflix" status={STATUS_LIST.NOT_RECEIVED} />
-        <Bill title="Disney+" amount="30,00" status={STATUS_LIST.PAID} />
-        <Bill title="Google One" status={STATUS_LIST.NOT_RECEIVED} />
-        <Bill title="Apple" status={STATUS_LIST.RECEIVED} />
-        <Bill
-          title="Microsoft Office"
-          paidOn="01/03/2021"
-          receivedOn="21/02/2021"
-          status={STATUS_LIST.PAID}
-        />
-      </BillsWrapper>
+      <BillsWrapper>{renderBills()}</BillsWrapper>
     </Main>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return { bills: state.bills };
+};
+
+export default connect(mapStateToProps)(Home);

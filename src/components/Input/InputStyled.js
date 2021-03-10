@@ -7,12 +7,15 @@ import {
 } from "react-native-woodpicker";
 
 export const InputWrapper = styled.View`
-  margin-bottom: 25px;
   flex-direction: row;
   border-color: ${COLORS.PRIMARY};
   border-width: 3px;
   border-radius: 40px;
   align-items: center;
+`;
+
+export const HelperWrapper = styled.View`
+  margin-bottom: 25px;
 `;
 
 export const Input = styled.TextInput`
@@ -23,7 +26,8 @@ export const Input = styled.TextInput`
 `;
 
 export const InputIcon = styled.View`
-  background-color: ${COLORS.PRIMARY};
+  background-color: ${({ color }) =>
+    color ? color : COLORS.PRIMARY};
   height: 60px;
   width: 60px;
   border-radius: 30px;
@@ -44,4 +48,10 @@ export const Picker = styled(RNPicker)`
 
 export const DatePicker = styled(RNDatePicker)`
   margin-left: 10px;
+`;
+
+export const Helper = styled.Text`
+  color: ${COLORS.DARK};
+  font-weight: bold;
+  margin: 5px 0px 0px 25px;
 `;

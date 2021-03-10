@@ -1,10 +1,10 @@
 import styled from "styled-components/native";
+import COLORS from "../../constants/colors";
 
 export const Container = styled.View`
-  justify-content: center;
   align-items: center;
   align-self: stretch;
-  padding-top: 20px;
+  padding-top: 15px;
 `;
 
 export const MonthWrapper = styled.View`
@@ -16,9 +16,10 @@ export const MonthWrapper = styled.View`
 `;
 
 export const Month = styled.Text`
-  font-size: 30px;
+  font-size: 22px;
 `;
 
 export const Year = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
 `;

@@ -8,7 +8,6 @@ export const SafeContainer = styled(SafeArea())`
 `;
 
 export const FormArea = styled.View`
-  margin-top: 50px;
   align-self: stretch;
 `;
 
@@ -21,7 +20,3 @@ export const Container = styled.ScrollView`
   padding: 20px;
 `;
 
-export const Title = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-`;

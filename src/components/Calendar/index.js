@@ -24,11 +24,11 @@ const Calendar = ({ onNext, onPrevious }) => {
       <Year>{now.format("YYYY")}</Year>
       <MonthWrapper>
         <TouchableOpacity onPress={() => setPrevious(now, setNow, onPrevious)}>
-          <Ionicons name="chevron-back" size={40} />
+          <Ionicons name="chevron-back" size={22} />
         </TouchableOpacity>
         <Month>{now.format("MMM").toUpperCase()}</Month>
         <TouchableOpacity onPress={() => setNext(now, setNow, onNext)}>
-          <Ionicons name="chevron-forward" size={40} />
+          <Ionicons name="chevron-forward" size={22} />
         </TouchableOpacity>
       </MonthWrapper>
     </Container>

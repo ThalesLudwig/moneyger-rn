@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import STATUS, { statusName } from "../../constants/status";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { add } from "../../config/billSlice";
+import store from "../../config/store";
 import {
   SafeContainer,
   Container,
@@ -10,21 +12,27 @@ import {
   TitleWrapper,
 } from "./NewStyled";
 
-const New = () => {
+const New = ({ navigation }) => {
   const pickerStatus = [
     { label: statusName[STATUS.NOT_RECEIVED], value: STATUS.NOT_RECEIVED },
     { label: statusName[STATUS.PAID], value: STATUS.PAID },
     { label: statusName[STATUS.RECEIVED], value: STATUS.RECEIVED },
   ];
 
-  const [status, setStatus] = useState(pickerStatus[0]);
-  const [receivedOn, setReceivedOn] = useState(null);
-  const [paidOn, setPaidOn] = useState(null);
   const [title, setTitle] = useState("");
 
-  const shouldShowAmount = status.value !== STATUS.NOT_RECEIVED;
-  const shouldShowReceived = status.value !== STATUS.NOT_RECEIVED;
-  const shouldShowPaid = status.value === STATUS.PAID;
+  const submit = () => {
+    const bill = {
+      id: new Date().getUTCMilliseconds(),
+      title: title,
+      amount: 0,
+      status: pickerStatus[0].value,
+      data: {},
+    };
+    store.dispatch(add(bill));
+    setTitle("");
+    navigation.navigate("Home");
+  };
 
   return (
     <SafeContainer>
@@ -37,52 +45,10 @@ const New = () => {
             icon="file-edit-outline"
             placeholder="Título da despesa"
             onChange={setTitle}
+            value={title}
           />
-
-          {shouldShowAmount && (
-            <Input
-              icon="credit-card-outline"
-              placeholder="R$"
-              keyboardType="decimal-pad"
-            />
-          )}
-
-          <Input
-            mode="picker"
-            icon="check"
-            placeholder="Status da despesa"
-            value={status}
-            title="Status"
-            items={pickerStatus}
-            onChange={setStatus}
-          />
-
-          {shouldShowReceived && (
-            <Input
-              mode="date"
-              icon="calendar-blank"
-              placeholder={
-                receivedOn ? receivedOn.toDateString() : "Recebido em"
-              }
-              value={receivedOn}
-              title="Recebido em"
-              onChange={setReceivedOn}
-            />
-          )}
-
-          {shouldShowPaid && (
-            <Input
-              mode="date"
-              icon="calendar-check"
-              placeholder={paidOn ? paidOn.toDateString() : "Pago em"}
-              value={paidOn}
-              title="Pago em"
-              onChange={setPaidOn}
-            />
-          )}
-
           <Button
-            onPress={() => console.log("touch")}
+            onPress={submit}
             value="REGISTRAR"
             disabled={title.trim().length === 0}
           />

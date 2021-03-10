@@ -6,10 +6,13 @@ import {
   Icon,
   Picker,
   DatePicker,
+  Helper,
+  HelperWrapper,
 } from "./InputStyled";
 
 const InputContainer = ({
   icon,
+  iconColor,
   placeholder,
   mode,
   keyboardType,
@@ -17,6 +20,8 @@ const InputContainer = ({
   items,
   value,
   title,
+  helper,
+  hasHelper,
 }) => {
   const renderInput = () => {
     switch (mode) {
@@ -26,6 +31,7 @@ const InputContainer = ({
             placeholder={placeholder}
             keyboardType={keyboardType}
             onChangeText={(text) => onChange(text)}
+            value={value.toString()}
           />
         );
       case "date":
@@ -53,18 +59,22 @@ const InputContainer = ({
             placeholder={placeholder}
             keyboardType={keyboardType}
             onChangeText={(text) => onChange(text)}
+            value={value.toString()}
           />
         );
     }
   };
 
   return (
-    <InputWrapper>
-      <InputIcon>
-        <Icon name={icon} />
-      </InputIcon>
-      {renderInput()}
-    </InputWrapper>
+    <HelperWrapper>
+      <InputWrapper>
+        <InputIcon color={iconColor}>
+          <Icon name={icon} />
+        </InputIcon>
+        {renderInput()}
+      </InputWrapper>
+      {hasHelper && <Helper>{helper}</Helper>}
+    </HelperWrapper>
   );
 };
 

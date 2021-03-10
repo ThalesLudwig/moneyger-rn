@@ -1,14 +1,30 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import Home from "./containers/Home";
 import New from "./containers/New";
+import Edit from "./containers/Edit";
 import Options from "./containers/Options";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "./constants/colors";
 
 const { Navigator, Screen } = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-export default function TabNavigator() {
+const HomeNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: "Despesas" }}
+      />
+      <Stack.Screen name="Edit" component={Edit} options={{ title: "Editar Despesa" }} />
+    </Stack.Navigator>
+  );
+};
+
+export default function MainNavigator() {
   return (
     <Navigator
       tabBarOptions={{
@@ -33,7 +49,11 @@ export default function TabNavigator() {
       })}
       backBehavior="history"
     >
-      <Screen name="Home" component={Home} options={{ title: "Despesas" }} />
+      <Screen
+        name="Home"
+        component={HomeNavigator}
+        options={{ title: "Despesas" }}
+      />
       <Screen name="New" component={New} options={{ title: "Adicionar" }} />
       <Screen
         name="Options"

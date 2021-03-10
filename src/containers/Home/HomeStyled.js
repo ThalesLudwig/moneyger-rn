@@ -9,5 +9,5 @@ export const Main = styled(SafeDeviceView())`
 `;
 
 export const BillsWrapper = styled.ScrollView`
-  margin-top: 30px;
+  margin-top: 10px;
 `;
