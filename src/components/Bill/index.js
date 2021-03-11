@@ -52,7 +52,7 @@ const Bill = ({
 
   return (
     <Touchable onPress={onEdit}>
-      <Container status={status} style={extraStyles.shadows}>
+      <Container status={status}>
         <RowWrapper>
           <ColumnWrapper>
             <TitleStatusWrapper>
