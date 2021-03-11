@@ -9,6 +9,7 @@ export const Container = styled.View`
 
 export const Icon = styled(Ionicons)`
   color: ${({ theme }) => theme.TEXT};
+  padding: 10px 20px;
 `;
 
 export const MonthWrapper = styled.View`
