@@ -6,6 +6,7 @@ import { darkMode, lightMode } from "../../config/themeSlice";
 import store from "../../config/store";
 import { THEME_ENUM } from "../../constants/theme";
 import { SafeContainer, OptionText, Row } from "./OptionsStyled";
+import { showInstructions } from "../../config/instructionsSlice";
 
 const Options = ({ theme }) => {
   const clearData = () => {
@@ -18,6 +19,7 @@ const Options = ({ theme }) => {
           text: "Sim",
           onPress: () => {
             store.dispatch(clear());
+            store.dispatch(showInstructions());
             Alert.alert("Dados removidos");
           },
         },
