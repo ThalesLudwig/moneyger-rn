@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import SafeArea from "../../components/SafeDeviceView";
-import moneyGif from "../../assets/diamond.gif";
+import moneyGif from "../../assets/money.gif";
 import checkGif from "../../assets/checkmark.gif";
 
 export const SafeContainer = styled(SafeArea())`
@@ -50,5 +50,5 @@ export const MoneyText = styled.Text`
   color: ${({ theme }) => theme.TEXT};
   font-size: 16px;
   font-weight: bold;
-  margin-top: -15px;
+  margin-top: 15px;
 `;
