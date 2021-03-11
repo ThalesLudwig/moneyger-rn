@@ -15,6 +15,8 @@ export const InputWrapper = styled.View`
 
 export const HelperWrapper = styled.View`
   margin-bottom: 25px;
+  width: 100%;
+  max-width: 500px;
 `;
 
 export const Input = styled.TextInput.attrs(({ theme }) => ({

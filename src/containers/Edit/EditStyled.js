@@ -8,6 +8,7 @@ export const SafeContainer = styled(SafeArea())`
 
 export const FormArea = styled.View`
   align-self: stretch;
+  align-items: center;
 `;
 
 export const TitleWrapper = styled.View`

@@ -11,6 +11,7 @@ export const SafeContainer = styled(SafeArea())`
 export const FormArea = styled.View`
   margin-top: 50px;
   align-self: stretch;
+  align-items: center;
 `;
 
 export const TitleWrapper = styled.View`

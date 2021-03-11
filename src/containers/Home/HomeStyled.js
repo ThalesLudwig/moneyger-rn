@@ -5,10 +5,13 @@ export const Main = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.BACKGROUND};
   padding: 0px;
+  align-items: center;
 `;
 
 export const BillsWrapper = styled.ScrollView`
   margin-top: 10px;
+  width: 100%;
+  max-width: 600px;
 `;
 
 export const Empty = styled.Image.attrs({

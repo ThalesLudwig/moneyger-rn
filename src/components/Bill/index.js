@@ -26,6 +26,7 @@ const Bill = ({
   onEdit,
 }) => {
   const extraStyles = StyleSheet.create({
+    // SHADOWS ARE REMOVED
     shadows: {
       shadowColor: COLORS.GREY,
       shadowOffset: {
@@ -37,6 +38,8 @@ const Bill = ({
       elevation: 5,
     },
   });
+
+  const parsedTitle = title.length > 48 ? `${title.slice(0, 45)}...` : title;
 
   const removeBill = () => {
     Alert.alert(
@@ -56,10 +59,12 @@ const Bill = ({
         <RowWrapper>
           <ColumnWrapper>
             <TitleStatusWrapper>
-              <Title>{title}</Title>
               <BillStatus status={status} />
+              <Title>{parsedTitle}</Title>
             </TitleStatusWrapper>
-            {receivedOn && <Text>Recebido: {moment(receivedOn).format("DD/MM/YYYY")}</Text>}
+            {receivedOn && (
+              <Text>Recebido: {moment(receivedOn).format("DD/MM/YYYY")}</Text>
+            )}
             {paidOn && <Text>Pago: {moment(paidOn).format("DD/MM/YYYY")}</Text>}
             <Amount>R$ {amount || "0.00"}</Amount>
           </ColumnWrapper>

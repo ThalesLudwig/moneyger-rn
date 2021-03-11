@@ -67,7 +67,7 @@ export const BillStatus = styled.View`
   height: 13px;
   border-radius: 50px;
   background-color: ${({ status }) => getStatusColor(status)};
-  margin-left: 15px;
+  margin-right: 15px;
 `;
 
 export const Icon = styled(MaterialCommunityIcons)`
