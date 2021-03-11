@@ -11,7 +11,7 @@ const ButtonContainer = ({ icon, onPress, value, stretch, disabled }) => {
             <Icon name={icon} />
           </ButtonIcon>
         )}
-        <Title>{value}</Title>
+        <Title disabled={disabled}>{value}</Title>
       </ButtonWrapper>
     </Touchable>
   );

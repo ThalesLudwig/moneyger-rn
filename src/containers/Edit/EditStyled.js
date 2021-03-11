@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
 import SafeArea from "../../components/SafeDeviceView";
-import COLORS from "../../constants/colors";
 
 export const SafeContainer = styled(SafeArea())`
   flex: 1;
-  background-color: ${COLORS.LIGHT};
+  background-color: ${({ theme }) => theme.BACKGROUND};
 `;
 
 export const FormArea = styled.View`

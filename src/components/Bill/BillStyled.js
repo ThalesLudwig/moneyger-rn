@@ -21,7 +21,7 @@ export const Container = styled.View`
   padding: 15px 25px;
   margin: 10px 15px;
   border-radius: 20px;
-  background-color: ${COLORS.WHITE};
+  background-color: ${({ theme }) => theme.CARD};
 `;
 
 export const RowWrapper = styled.View`
@@ -45,20 +45,21 @@ export const ColumnWrapper = styled.View`
 
 export const Text = styled.Text`
   font-size: 14px;
-  color: ${COLORS.GREY};
+  color: ${({ theme }) => theme.DISABLED};
 `;
 
 export const Amount = styled.Text`
   font-size: 18px;
   font-weight: bold;
-  color: ${COLORS.PRIMARY};
+  color: ${({ theme }) => theme.PRIMARY_ALT};
+  padding-top: 5px;
 `;
 
 export const Title = styled.Text`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 5px;
-  color: ${COLORS.DARK};
+  color: ${({ theme }) => theme.TEXT};
 `;
 
 export const BillStatus = styled.View`
@@ -71,5 +72,5 @@ export const BillStatus = styled.View`
 
 export const Icon = styled(MaterialCommunityIcons)`
   margin: 10px 0px;
-  color: ${COLORS.DARK};
+  color: ${({ theme }) => theme.TEXT};
 `;

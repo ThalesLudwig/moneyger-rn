@@ -13,7 +13,7 @@ import {
   EmptyText,
 } from "./HomeStyled";
 
-const Home = ({ bills, navigation, theme }) => {
+const Home = ({ bills, navigation }) => {
   const [date, setDate] = useState(moment());
 
   const renderEmpty = () => {
@@ -74,7 +74,7 @@ const Home = ({ bills, navigation, theme }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { bills: state.bills, theme: state.theme };
+  return { bills: state.bills };
 };
 
 export default connect(mapStateToProps)(Home);

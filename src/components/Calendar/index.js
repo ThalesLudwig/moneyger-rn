@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
-import { Container, Month, Year, MonthWrapper } from "./CalendarStyled";
+import { Container, Month, Year, MonthWrapper, Icon } from "./CalendarStyled";
 
 const setNext = (now, setNow, onNext) => {
   const newDate = moment(now).add(1, "M");
@@ -24,11 +23,11 @@ const Calendar = ({ onNext, onPrevious }) => {
       <Year>{now.format("YYYY")}</Year>
       <MonthWrapper>
         <TouchableOpacity onPress={() => setPrevious(now, setNow, onPrevious)}>
-          <Ionicons name="chevron-back" size={22} />
+          <Icon name="chevron-back" size={22} />
         </TouchableOpacity>
         <Month>{now.format("MMM").toUpperCase()}</Month>
         <TouchableOpacity onPress={() => setNext(now, setNow, onNext)}>
-          <Ionicons name="chevron-forward" size={22} />
+          <Icon name="chevron-forward" size={22} />
         </TouchableOpacity>
       </MonthWrapper>
     </Container>

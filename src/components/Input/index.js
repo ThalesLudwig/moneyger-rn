@@ -10,6 +10,7 @@ import {
   DatePicker,
   Helper,
   HelperWrapper,
+  DatePickerPlaceholder,
 } from "./InputStyled";
 
 const InputContainer = ({
@@ -48,9 +49,9 @@ const InputContainer = ({
             doneText="Adicionar"
             InputComponent={(e) => (
               <TouchableOpacity onPress={() => e.togglePicker()} style={{ flex: 1, justifyContent: "center" }}>
-                <Text style={{ paddingLeft: 10 }}>
+                <DatePickerPlaceholder>
                   {!!value ? moment(value, "ddd MMM DD YYYY").format("DD/MM/YYYY") : placeholder}
-                </Text>
+                </DatePickerPlaceholder>
               </TouchableOpacity>
             )}
           />

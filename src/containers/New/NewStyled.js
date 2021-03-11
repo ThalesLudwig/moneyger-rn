@@ -1,13 +1,11 @@
 import styled from "styled-components/native";
 import SafeArea from "../../components/SafeDeviceView";
-import COLORS from "../../constants/colors";
-import moneyGif from "../../assets/money.gif";
-import diamondGif from "../../assets/diamond.gif";
+import moneyGif from "../../assets/diamond.gif";
 import checkGif from "../../assets/checkmark.gif";
 
 export const SafeContainer = styled(SafeArea())`
   flex: 1;
-  background-color: ${COLORS.LIGHT};
+  background-color: ${({ theme }) => theme.BACKGROUND};
 `;
 
 export const FormArea = styled.View`
@@ -49,8 +47,8 @@ export const MoneyWrapper = styled.View`
 `;
 
 export const MoneyText = styled.Text`
-  color: ${COLORS.DARK};
+  color: ${({ theme }) => theme.TEXT};
   font-size: 16px;
   font-weight: bold;
-  margin-top: 15px;
+  margin-top: -15px;
 `;

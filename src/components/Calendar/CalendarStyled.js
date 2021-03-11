@@ -1,10 +1,14 @@
 import styled from "styled-components/native";
-import COLORS from "../../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
 
 export const Container = styled.View`
   align-items: center;
   align-self: stretch;
   padding-top: 15px;
+`;
+
+export const Icon = styled(Ionicons)`
+  color: ${({ theme }) => theme.TEXT};
 `;
 
 export const MonthWrapper = styled.View`
@@ -17,9 +21,11 @@ export const MonthWrapper = styled.View`
 
 export const Month = styled.Text`
   font-size: 22px;
+  color: ${({ theme }) => theme.TEXT};
 `;
 
 export const Year = styled.Text`
   font-size: 16px;
   font-weight: bold;
+  color: ${({ theme }) => theme.TEXT};
 `;

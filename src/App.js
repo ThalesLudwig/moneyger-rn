@@ -6,15 +6,18 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import store, { persistor } from "./config/store";
 import Navigator from "./Navigator";
+import ThemeManager from "./components/ThemeManager";
 
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <NavigationContainer>
-          <StatusBar style="auto" />
-          <Navigator />
-        </NavigationContainer>
+        <ThemeManager>
+          <NavigationContainer>
+            <StatusBar style="auto" />
+            <Navigator />
+          </NavigationContainer>
+        </ThemeManager>
       </PersistGate>
     </Provider>
   );

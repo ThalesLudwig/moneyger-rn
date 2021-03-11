@@ -6,27 +6,43 @@ import New from "./containers/New";
 import Edit from "./containers/Edit";
 import Options from "./containers/Options";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import COLORS from "./constants/colors";
-
 const { Navigator, Screen } = createBottomTabNavigator();
+import { withTheme } from "styled-components";
+
 const Stack = createStackNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({ theme }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerStyle: { backgroundColor: theme.CARD },
+        headerTitleStyle: { color: theme.TEXT },
+      }}
+    >
       <Stack.Screen
         name="Home"
         component={Home}
         options={{ title: "Despesas" }}
       />
-      <Stack.Screen name="Edit" component={Edit} options={{ title: "Editar Despesa" }} />
+      <Stack.Screen
+        name="Edit"
+        component={Edit}
+        options={{ title: "Editar Despesa" }}
+      />
     </Stack.Navigator>
   );
 };
 
-const OptionsNavigator = () => {
+const OptionsNavigator = ({ theme }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerStyle: { backgroundColor: theme.CARD },
+        headerTitleStyle: { color: theme.TEXT },
+      }}
+    >
       <Screen
         name="Options"
         component={Options}
@@ -36,12 +52,16 @@ const OptionsNavigator = () => {
   );
 };
 
-export default function MainNavigator() {
+const MainNavigator = ({ theme }) => {
   return (
     <Navigator
       tabBarOptions={{
-        activeTintColor: COLORS.PRIMARY,
+        activeTintColor: theme.PRIMARY_ALT,
         labelStyle: { fontSize: 12 },
+        style: {
+          backgroundColor: theme.CARD,
+          borderTopColor: theme.CARD,
+        },
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
@@ -64,15 +84,17 @@ export default function MainNavigator() {
     >
       <Screen
         name="Home"
-        component={HomeNavigator}
+        component={withTheme(HomeNavigator)}
         options={{ title: "Despesas" }}
       />
       <Screen name="New" component={New} options={{ title: "Adicionar" }} />
       <Screen
         name="Options"
-        component={OptionsNavigator}
+        component={withTheme(OptionsNavigator)}
         options={{ title: "Ajustes" }}
       />
     </Navigator>
   );
-}
+};
+
+export default withTheme(MainNavigator);

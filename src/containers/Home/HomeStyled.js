@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
-import COLORS from "../../constants/colors";
 import pencilGif from "../../assets/pencil.gif";
 
 export const Main = styled.SafeAreaView`
   flex: 1;
-  background-color: ${COLORS.LIGHT};
+  background-color: ${({ theme }) => theme.BACKGROUND};
   padding: 0px;
 `;
 
@@ -26,7 +25,7 @@ export const EmptyWrapper = styled.View`
 `;
 
 export const EmptyText = styled.Text`
-  color: ${COLORS.DARK};
+  color: ${({ theme }) => theme.TEXT};
   font-size: 16px;
   font-weight: bold;
   margin-top: 5px;
