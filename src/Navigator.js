@@ -15,8 +15,7 @@ const HomeNavigator = ({ theme }) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitleAlign: "center",
-        headerStyle: { backgroundColor: theme.CARD },
+        headerStyle: { backgroundColor: theme.BACKGROUND },
         headerTitleStyle: { color: theme.TEXT },
       }}
     >

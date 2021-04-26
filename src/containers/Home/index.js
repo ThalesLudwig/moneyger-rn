@@ -39,16 +39,16 @@ const Home = ({ bills, navigation }) => {
         <Bill
           id={b.id}
           title={b.title}
-          paidOn={b.data?.[year]?.[month]?.paidOn || null}
+          // paidOn={b.data?.[year]?.[month]?.paidOn || null}
           amount={parseFloat(
             (b.data?.[year]?.[month]?.amount || "0,00").replace(",", ".")
           )
             .toFixed(2)
             .replace(".", ",")}
-          receivedOn={b.data?.[year]?.[month]?.receivedOn || null}
+          // receivedOn={b.data?.[year]?.[month]?.receivedOn || null}
           status={b.data?.[year]?.[month]?.status || 0}
           key={b.id}
-          onRemove={() => store.dispatch(remove(b.id))}
+          // onRemove={() => store.dispatch(remove(b.id))}
           onEdit={() =>
             navigation.navigate("Edit", {
               bill: b,

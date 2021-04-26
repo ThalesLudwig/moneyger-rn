@@ -20,9 +20,6 @@ const Bill = ({
   status,
   title,
   amount = "0,00",
-  paidOn,
-  receivedOn,
-  onRemove,
   onEdit,
 }) => {
   const extraStyles = StyleSheet.create({
@@ -41,20 +38,20 @@ const Bill = ({
 
   const parsedTitle = title.length > 48 ? `${title.slice(0, 45)}...` : title;
 
-  const removeBill = () => {
-    Alert.alert(
-      "Remover despesa",
-      "Deseja remover permanentemente esta despesa? Ela será removida de todos os meses.",
-      [
-        { text: "Não", onPress: () => {} },
-        { text: "Sim", onPress: () => onRemove(id) },
-      ],
-      { cancelable: true }
-    );
-  };
+  // const removeBill = () => {
+  //   Alert.alert(
+  //     "Remover despesa",
+  //     "Deseja remover permanentemente esta despesa? Ela será removida de todos os meses.",
+  //     [
+  //       { text: "Não", onPress: () => {} },
+  //       { text: "Sim", onPress: () => onRemove(id) },
+  //     ],
+  //     { cancelable: true }
+  //   );
+  // };
 
   return (
-    <Touchable onPress={onEdit}>
+    <Touchable key={id} onPress={onEdit}>
       <Container status={status}>
         <RowWrapper>
           <ColumnWrapper>
@@ -62,18 +59,11 @@ const Bill = ({
               <BillStatus status={status} />
               <Title>{parsedTitle}</Title>
             </TitleStatusWrapper>
-            {receivedOn && (
-              <Text>Recebido: {moment(receivedOn).format("DD/MM/YYYY")}</Text>
-            )}
-            {paidOn && <Text>Pago: {moment(paidOn).format("DD/MM/YYYY")}</Text>}
             <Amount>R$ {amount || "0.00"}</Amount>
           </ColumnWrapper>
           <ColumnWrapper>
             <TouchableOpacity onPress={onEdit}>
-              <Icon name="square-edit-outline" size={35} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={removeBill}>
-              <Icon name="delete-outline" size={35} />
+              <Icon name="chevron-right" size={35} />
             </TouchableOpacity>
           </ColumnWrapper>
         </RowWrapper>

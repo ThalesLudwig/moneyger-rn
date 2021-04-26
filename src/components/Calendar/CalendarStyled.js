@@ -2,26 +2,26 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 
 export const Container = styled.View`
+  flex-direction: row;
   align-items: center;
-  align-self: stretch;
-  padding-top: 15px;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 export const Icon = styled(Ionicons)`
   color: ${({ theme }) => theme.TEXT};
-  padding: 10px 20px;
+  width: 20px;
 `;
 
 export const MonthWrapper = styled.View`
   flex-direction: row;
-  justify-content: space-evenly;
-  align-self: stretch;
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 10px;
 `;
 
 export const Month = styled.Text`
   font-size: 22px;
+  margin: 0px 15px;
   color: ${({ theme }) => theme.TEXT};
 `;
 

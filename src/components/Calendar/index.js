@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Container, Month, Year, MonthWrapper, Icon } from "./CalendarStyled";
 
 const setNext = (now, setNow, onNext) => {
@@ -16,20 +16,21 @@ const setPrevious = (now, setNow, onPrevious) => {
 };
 
 const Calendar = ({ onNext, onPrevious }) => {
+  moment.locale(["pt", "en"]);
   const [now, setNow] = useState(moment());
 
   return (
     <Container>
-      <Year>{now.format("YYYY")}</Year>
       <MonthWrapper>
         <TouchableOpacity onPress={() => setPrevious(now, setNow, onPrevious)}>
           <Icon name="chevron-back" size={22} />
         </TouchableOpacity>
-        <Month>{now.format("MMM").toUpperCase()}</Month>
+        <Month>{now.format("MMMM")}</Month>
         <TouchableOpacity onPress={() => setNext(now, setNow, onNext)}>
           <Icon name="chevron-forward" size={22} />
         </TouchableOpacity>
       </MonthWrapper>
+      <Year>{now.format("YYYY")}</Year>
     </Container>
   );
 };

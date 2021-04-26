@@ -18,9 +18,9 @@ export const getStatusColor = (status) => {
 
 export const Container = styled.View`
   align-self: stretch;
-  padding: 15px 25px;
-  margin: 10px 15px;
-  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 5px 0px;
+  border-radius: 15px;
   background-color: ${({ theme }) => theme.CARD};
 `;
 
@@ -49,14 +49,13 @@ export const Text = styled.Text`
 `;
 
 export const Amount = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.PRIMARY_ALT};
-  padding-top: 5px;
+  font-size: 14px;
+  color: ${({ theme }) => theme.DISABLED};
+  padding: 5px 0px 0px 28px;
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 5px;
   color: ${({ theme }) => theme.TEXT};
