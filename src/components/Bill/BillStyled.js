@@ -71,5 +71,5 @@ export const BillStatus = styled.View`
 
 export const Icon = styled(MaterialCommunityIcons)`
   margin: 10px 0px;
-  color: ${({ theme }) => theme.TEXT};
+  color: ${({ theme }) => theme.DISABLED};
 `;
