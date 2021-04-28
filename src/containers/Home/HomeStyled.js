@@ -5,16 +5,21 @@ import searchGif from "../../assets/search.gif";
 export const Main = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.BACKGROUND};
-  padding: 0px 25px 0px 25px;
-  align-items: center;
 `;
 
 export const ScrollWrapper = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    alignItems: 'center',
+  },
 })`
-  margin-top: 10px;
+  width: 100%;
+`;
+
+export const ContentWrapper = styled.View`
   width: 100%;
   max-width: 600px;
+  padding: 0px 25px 0px 25px;
 `;
 
 export const Empty = styled.Image.attrs({
@@ -52,3 +57,11 @@ export const Filters = styled.View`
   width: 100%;
   flex-wrap: wrap;
 `;
+
+export const Cards = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: {
+    padding: 25,
+  },
+})``;

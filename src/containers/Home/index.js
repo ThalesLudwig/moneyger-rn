@@ -4,8 +4,13 @@ import moment from "moment";
 import Calendar from "../../components/Calendar";
 import Bill from "../../components/Bill";
 import Pill from "../../components/Pill";
+import Card from "../../components/Card";
+import toBrazilianReal from "../../utils/toBrazilianReal";
 import FilterConstants from "../../constants/filters";
-import { statusName } from "../../constants/status";
+import StatusConstants, {
+  statusName,
+  statusColor,
+} from "../../constants/status";
 import store from "../../config/store";
 import { remove } from "../../config/billSlice";
 import {
@@ -16,6 +21,8 @@ import {
   Filters,
   ScrollWrapper,
   NoResults,
+  Cards,
+  ContentWrapper,
 } from "./HomeStyled";
 
 const Home = ({ bills, navigation }) => {
@@ -51,6 +58,49 @@ const Home = ({ bills, navigation }) => {
     );
   };
 
+  const getTotalAmount = () => {
+    if (bills.value.length === 0) return 0;
+    const total = bills.value.reduce((acc, curr) => {
+      const parsedAcc =
+        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
+      const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
+      return parsedAcc + parsedCurr;
+    });
+    return total;
+  };
+
+  const getPaidAmount = () => {
+    const result = bills.value.filter(
+      (b) => b.data?.[year]?.[month]?.status === StatusConstants.PAID
+    );
+    if (result.length === 0) return 0;
+    if (result.length === 1) {
+      return parseFloat(result[0].data?.[year]?.[month]?.amount);
+    }
+    return result.reduce((acc, curr) => {
+      const parsedAcc =
+        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
+      const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
+      return parsedAcc + parsedCurr;
+    });
+  };
+
+  const getReceivedAmount = () => {
+    const result = bills.value.filter(
+      (b) => b.data?.[year]?.[month]?.status === StatusConstants.RECEIVED
+    );
+    if (result.length === 0) return 0;
+    if (result.length === 1) {
+      return parseFloat(result[0].data?.[year]?.[month]?.amount);
+    }
+    return result.reduce((acc, curr) => {
+      const parsedAcc =
+        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
+      const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
+      return parsedAcc + parsedCurr;
+    });
+  };
+
   const renderBills = () => {
     if (bills.value.length === 0) {
       return renderEmpty();
@@ -60,11 +110,11 @@ const Home = ({ bills, navigation }) => {
         id={b.id}
         title={b.title}
         // paidOn={b.data?.[year]?.[month]?.paidOn || null}
-        amount={parseFloat(
-          (b.data?.[year]?.[month]?.amount || "0,00").replace(",", ".")
-        )
-          .toFixed(2)
-          .replace(".", ",")}
+        amount={toBrazilianReal(
+          parseFloat(
+            (b.data?.[year]?.[month]?.amount || "0,00").replace(",", ".")
+          )
+        )}
         // receivedOn={b.data?.[year]?.[month]?.receivedOn || null}
         status={b.data?.[year]?.[month]?.status || 0}
         key={b.id}
@@ -88,33 +138,52 @@ const Home = ({ bills, navigation }) => {
   return (
     <Main>
       <ScrollWrapper>
-        <Calendar
-          onNext={(date) => setDate(date)}
-          onPrevious={(date) => setDate(date)}
-        />
-        <Filters>
-          <Pill
-            active={activeFilter === FilterConstants.ALL}
-            onPress={() => setActiveFilter(FilterConstants.ALL)}
-            value="Todos"
+        <Cards>
+          <Card
+            title="Total adicionado"
+            amount={toBrazilianReal(getTotalAmount())}
+            color={statusColor[StatusConstants.NOT_RECEIVED]}
           />
-          <Pill
-            active={activeFilter === FilterConstants.PAID}
-            onPress={() => setActiveFilter(FilterConstants.PAID)}
-            value={statusName[FilterConstants.PAID]}
+          <Card
+            title="Total pago"
+            amount={toBrazilianReal(getPaidAmount())}
+            color={statusColor[StatusConstants.PAID]}
           />
-          <Pill
-            active={activeFilter === FilterConstants.RECEIVED}
-            onPress={() => setActiveFilter(FilterConstants.RECEIVED)}
-            value={statusName[FilterConstants.RECEIVED]}
+          <Card
+            title="Total a pagar"
+            amount={toBrazilianReal(getReceivedAmount())}
+            color={statusColor[StatusConstants.RECEIVED]}
           />
-          <Pill
-            active={activeFilter === FilterConstants.NOT_RECEIVED}
-            onPress={() => setActiveFilter(FilterConstants.NOT_RECEIVED)}
-            value={statusName[FilterConstants.NOT_RECEIVED]}
+        </Cards>
+        <ContentWrapper>
+          <Calendar
+            onNext={(date) => setDate(date)}
+            onPrevious={(date) => setDate(date)}
           />
-        </Filters>
-        {renderBills()}
+          <Filters>
+            <Pill
+              active={activeFilter === FilterConstants.ALL}
+              onPress={() => setActiveFilter(FilterConstants.ALL)}
+              value="Todos"
+            />
+            <Pill
+              active={activeFilter === FilterConstants.PAID}
+              onPress={() => setActiveFilter(FilterConstants.PAID)}
+              value={statusName[FilterConstants.PAID]}
+            />
+            <Pill
+              active={activeFilter === FilterConstants.RECEIVED}
+              onPress={() => setActiveFilter(FilterConstants.RECEIVED)}
+              value={statusName[FilterConstants.RECEIVED]}
+            />
+            <Pill
+              active={activeFilter === FilterConstants.NOT_RECEIVED}
+              onPress={() => setActiveFilter(FilterConstants.NOT_RECEIVED)}
+              value={statusName[FilterConstants.NOT_RECEIVED]}
+            />
+          </Filters>
+          {renderBills()}
+        </ContentWrapper>
       </ScrollWrapper>
     </Main>
   );
