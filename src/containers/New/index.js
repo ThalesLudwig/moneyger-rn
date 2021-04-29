@@ -17,13 +17,25 @@ import {
 
 const New = ({ navigation }) => {
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
+
+  const removeComma = (amount) => {
+    if (!amount) return "";
+    const parsedAmount = amount.toString().replace(",", ".");
+    return parseFloat(parsedAmount);
+  };
+
+  const removeDot = (amount) => {
+    if (!amount) return "";
+    const parsedAmount = amount.toString().replace(".", ",");
+    return parsedAmount;
+  };
 
   const submit = () => {
     const bill = {
       id: new Date().getUTCMilliseconds(),
       title: title,
-      amount: amount,
+      amount: removeComma(amount) || 0,
       status: STATUS.NOT_RECEIVED,
       data: {},
     };
@@ -57,7 +69,7 @@ const New = ({ navigation }) => {
               icon="credit-card-outline"
               placeholder="0,00"
               onChange={setAmount}
-              value={amount}
+              value={removeDot(amount)}
               hasBorder
               keyboardType="decimal-pad"
               label="Valor inicial"

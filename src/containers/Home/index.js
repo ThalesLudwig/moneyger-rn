@@ -58,10 +58,19 @@ const Home = ({ bills, navigation }) => {
 
   const getTotalAmount = () => {
     if (bills.value.length === 0) return 0;
+    if (bills.value.length === 1) {
+      return parseFloat(bills.value[0].amount) || 0;
+    }
     const total = bills.value.reduce((acc, curr) => {
       const parsedAcc =
-        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
-      const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
+        parseFloat(acc) ||
+        parseFloat(acc.data?.[year]?.[month]?.amount) ||
+        parseFloat(acc.amount) ||
+        0;
+      const parsedCurr =
+        parseFloat(curr.data?.[year]?.[month]?.amount) ||
+        parseFloat(curr.amount) ||
+        0;
       return parsedAcc + parsedCurr;
     });
     return total;
@@ -102,11 +111,9 @@ const Home = ({ bills, navigation }) => {
   const getCurrentAmount = (currentBill) => {
     return toBrazilianReal(
       parseFloat(
-        (
-          currentBill.data?.[year]?.[month]?.amount ||
+        currentBill.data?.[year]?.[month]?.amount ||
           currentBill.amount ||
           "0,00"
-        ).replace(",", ".")
       )
     );
   };

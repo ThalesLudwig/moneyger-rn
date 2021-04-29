@@ -56,12 +56,22 @@ const Edit = ({ navigation, route }) => {
     setPaidOn(null);
   };
 
+  const removeComma = (amount) => {
+    const parsedAmount = amount.toString().replace(",", ".");
+    return parseFloat(parsedAmount);
+  };
+
+  const removeDot = (amount) => {
+    const parsedAmount = amount.toString().replace(".", ",");
+    return parsedAmount;
+  };
+
   const submit = () => {
     const newBill = {
       id: bill.id,
       title: title,
       paidOn: paidOn?.toJSON(),
-      amount: amount,
+      amount: removeComma(amount) || 0,
       receivedOn: receivedOn?.toJSON(),
       status: status,
     };
@@ -116,7 +126,7 @@ const Edit = ({ navigation, route }) => {
             <Input
               placeholder="0,00"
               keyboardType="decimal-pad"
-              value={amount}
+              value={removeDot(amount)}
               onChange={(value) => setAmount(value)}
               fontSize="42px"
               fontWeight="bold"
