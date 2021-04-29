@@ -11,8 +11,6 @@ import StatusConstants, {
   statusName,
   statusColor,
 } from "../../constants/status";
-import store from "../../config/store";
-import { remove } from "../../config/billSlice";
 import {
   Main,
   Empty,
@@ -101,6 +99,18 @@ const Home = ({ bills, navigation }) => {
     });
   };
 
+  const getCurrentAmount = (currentBill) => {
+    return toBrazilianReal(
+      parseFloat(
+        (
+          currentBill.data?.[year]?.[month]?.amount ||
+          currentBill.amount ||
+          "0,00"
+        ).replace(",", ".")
+      )
+    );
+  };
+
   const renderBills = () => {
     if (bills.value.length === 0) {
       return renderEmpty();
@@ -109,16 +119,9 @@ const Home = ({ bills, navigation }) => {
       <Bill
         id={b.id}
         title={b.title}
-        // paidOn={b.data?.[year]?.[month]?.paidOn || null}
-        amount={toBrazilianReal(
-          parseFloat(
-            (b.data?.[year]?.[month]?.amount || "0,00").replace(",", ".")
-          )
-        )}
-        // receivedOn={b.data?.[year]?.[month]?.receivedOn || null}
+        amount={getCurrentAmount(b)}
         status={b.data?.[year]?.[month]?.status || 0}
         key={b.id}
-        // onRemove={() => store.dispatch(remove(b.id))}
         onEdit={() =>
           navigation.navigate("Edit", {
             bill: b,

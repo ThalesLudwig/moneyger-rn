@@ -12,6 +12,8 @@ import {
   HelperWrapper,
   DatePickerPlaceholder,
   Label,
+  Required,
+  LabelWrapper,
 } from "./InputStyled";
 
 const InputContainer = ({
@@ -31,6 +33,7 @@ const InputContainer = ({
   fontWeight,
   fontSize,
   label,
+  required,
 }) => {
   const renderInput = () => {
     switch (mode) {
@@ -94,7 +97,12 @@ const InputContainer = ({
 
   return (
     <HelperWrapper hasHelper={hasHelper}>
-      {label && <Label>{label}</Label>}
+      {label && (
+        <LabelWrapper>
+          <Label>{label}</Label>
+          {required && <Required>*</Required>}
+        </LabelWrapper>
+      )}
       <InputWrapper color={borderColor} hasBorder={hasBorder}>
         {icon && (
           <InputIcon color={iconColor}>

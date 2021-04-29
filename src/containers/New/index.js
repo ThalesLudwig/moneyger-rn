@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import STATUS, { statusName } from "../../constants/status";
+import STATUS from "../../constants/status";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { add } from "../../config/billSlice";
@@ -11,57 +11,66 @@ import {
   MoneyWrapper,
   Money,
   MoneyText,
-  Checkmark,
+  ButtonArea,
+  InputWrapper,
 } from "./NewStyled";
 
 const New = ({ navigation }) => {
-  const pickerStatus = [
-    { label: statusName[STATUS.NOT_RECEIVED], value: STATUS.NOT_RECEIVED },
-    { label: statusName[STATUS.PAID], value: STATUS.PAID },
-    { label: statusName[STATUS.RECEIVED], value: STATUS.RECEIVED },
-  ];
-
   const [title, setTitle] = useState("");
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [amount, setAmount] = useState(0);
 
   const submit = () => {
-    setHasSubmitted(true);
-    setTimeout(() => {
-      const bill = {
-        id: new Date().getUTCMilliseconds(),
-        title: title,
-        amount: 0,
-        status: pickerStatus[0].value,
-        data: {},
-      };
-      store.dispatch(add(bill));
-      setTitle("");
-      setHasSubmitted(false);
-      navigation.navigate("Home");
-    }, 1500);
+    const bill = {
+      id: new Date().getUTCMilliseconds(),
+      title: title,
+      amount: amount,
+      status: STATUS.NOT_RECEIVED,
+      data: {},
+    };
+    store.dispatch(add(bill));
+    setTitle("");
+    setAmount(0);
+    navigation.navigate("Home");
   };
 
   return (
     <SafeContainer>
       <Container>
         <MoneyWrapper>
-          {!hasSubmitted && <Money />}
-          {hasSubmitted && <Checkmark />}
+          <Money />
           <MoneyText>Adicionar Despesa</MoneyText>
         </MoneyWrapper>
         <FormArea>
-          <Input
-            icon="file-edit-outline"
-            placeholder="Título da despesa"
-            onChange={setTitle}
-            value={title}
-          />
+          <InputWrapper>
+            <Input
+              icon="file-edit-outline"
+              placeholder="Ex: Aluguel"
+              onChange={setTitle}
+              value={title}
+              hasBorder
+              label="Título da despesa"
+              required
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              icon="credit-card-outline"
+              placeholder="0,00"
+              onChange={setAmount}
+              value={amount}
+              hasBorder
+              keyboardType="decimal-pad"
+              label="Valor inicial"
+            />
+          </InputWrapper>
+        </FormArea>
+        <ButtonArea>
           <Button
             onPress={submit}
-            value="ADICIONAR"
+            value="Adicionar"
             disabled={title.trim().length === 0}
           />
-        </FormArea>
+        </ButtonArea>
       </Container>
     </SafeContainer>
   );

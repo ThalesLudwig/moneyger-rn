@@ -41,7 +41,7 @@ const Edit = ({ navigation, route }) => {
   );
   const [title, setTitle] = useState(bill.title);
   const [amount, setAmount] = useState(
-    bill.data?.[year]?.[month]?.amount || ""
+    bill.data?.[year]?.[month]?.amount || bill.amount || ""
   );
   const [hasWarning, setHasWarning] = useState(false);
 

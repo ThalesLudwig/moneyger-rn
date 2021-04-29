@@ -1,22 +1,25 @@
 import styled from "styled-components/native";
 import SafeArea from "../../components/SafeDeviceView";
 import moneyGif from "../../assets/money.gif";
-import checkGif from "../../assets/checkmark.gif";
 
 export const SafeContainer = styled(SafeArea())`
   flex: 1;
   background-color: ${({ theme }) => theme.BACKGROUND};
+  align-items: center;
 `;
 
 export const FormArea = styled.View`
-  margin-top: 50px;
-  align-self: stretch;
-  align-items: center;
+  margin: 50px 0px;
+  max-width: 300px;
 `;
 
-export const TitleWrapper = styled.View`
+export const ButtonArea = styled.View`
   align-items: center;
-  align-self: stretch;
+  margin-bottom: 30px;
+`;
+
+export const InputWrapper = styled.View`
+  margin-bottom: 20px;
 `;
 
 export const Container = styled.ScrollView`
@@ -35,13 +38,6 @@ export const Money = styled.Image.attrs({
   height: 120px;
 `;
 
-export const Checkmark = styled.Image.attrs({
-  source: checkGif,
-})`
-  width: 120px;
-  height: 120px;
-`;
-
 export const MoneyWrapper = styled.View`
   justify-content: center;
   align-items: center;
@@ -53,3 +49,5 @@ export const MoneyText = styled.Text`
   font-weight: bold;
   margin-top: 15px;
 `;
+
+

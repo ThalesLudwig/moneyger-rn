@@ -7,7 +7,7 @@ import {
 
 export const InputWrapper = styled.View`
   flex-direction: row;
-  border-bottom-color: ${({ color, theme }) => (color ? color : theme.TEXT)};
+  border-bottom-color: ${({ color, theme }) => (color ? color : theme.DISABLED)};
   border-bottom-width: ${({ hasBorder }) => (hasBorder ? "1px" : "0px")};
 `;
 
@@ -28,7 +28,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
 `;
 
 export const InputIcon = styled.View`
-  height: 60px;
+  height: 50px;
   width: 60px;
   border-radius: 30px;
   align-items: center;
@@ -76,5 +76,16 @@ export const DatePickerPlaceholder = styled.Text`
 export const Label = styled.Text`
   color: ${({ theme }) => theme.TEXT};
   font-weight: bold;
+`;
+
+export const Required = styled.Text`
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 10px;
+`;
+
+export const LabelWrapper = styled.View`
   margin-left: 18px;
+  flex-direction: row;
 `;
