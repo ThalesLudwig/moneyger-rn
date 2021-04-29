@@ -17,8 +17,8 @@ const slides = [
   },
   {
     key: "2",
-    title: "Cadastre suas contas em todos os meses",
-    text: "E controle individualmente!",
+    title: "Suas contas são registradas em todos os meses",
+    text: "E controladas individualmente!",
     image: customize,
     backgroundColor: "#E79D5B",
   },
