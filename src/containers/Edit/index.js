@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import { Alert } from "react-native";
 import STATUS, { statusName, statusColor } from "../../constants/status";
 import MONTHS from "../../constants/months";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { edit } from "../../config/billSlice";
+import Pill from "../../components/Pill";
+import { edit, remove } from "../../config/billSlice";
 import store from "../../config/store";
-import { SafeContainer, Container, FormArea } from "./EditStyled";
+import toBrazilianReal from "../../utils/toBrazilianReal";
+import {
+  SafeContainer,
+  Container,
+  FormArea,
+  Amount,
+  DateField,
+  Header,
+  ButtonWrapper,
+  PillsWrapper,
+  AmountRow,
+} from "./EditStyled";
 
 const Edit = ({ navigation, route }) => {
   const pickerStatus = [
@@ -15,20 +28,25 @@ const Edit = ({ navigation, route }) => {
   ];
 
   const { bill, year, month } = route.params;
-  const [status, setStatus] = useState(pickerStatus[bill.data?.[year]?.[month]?.status || 0]);
+  const [status, setStatus] = useState(bill.data?.[year]?.[month]?.status || 0);
   const [receivedOn, setReceivedOn] = useState(
-    bill.data?.[year]?.[month]?.receivedOn ? new Date(bill.data?.[year]?.[month]?.receivedOn) : null
+    bill.data?.[year]?.[month]?.receivedOn
+      ? new Date(bill.data?.[year]?.[month]?.receivedOn)
+      : null
   );
   const [paidOn, setPaidOn] = useState(
-    bill.data?.[year]?.[month]?.paidOn ? new Date(bill.data?.[year]?.[month]?.paidOn) : null
+    bill.data?.[year]?.[month]?.paidOn
+      ? new Date(bill.data?.[year]?.[month]?.paidOn)
+      : null
   );
   const [title, setTitle] = useState(bill.title);
-  const [amount, setAmount] = useState(bill.data?.[year]?.[month]?.amount || "");
+  const [amount, setAmount] = useState(
+    bill.data?.[year]?.[month]?.amount || ""
+  );
   const [hasWarning, setHasWarning] = useState(false);
 
-  const shouldShowAmount = status.value !== STATUS.NOT_RECEIVED;
-  const shouldShowReceived = status.value !== STATUS.NOT_RECEIVED;
-  const shouldShowPaid = status.value === STATUS.PAID;
+  const shouldShowReceived = status !== STATUS.NOT_RECEIVED;
+  const shouldShowPaid = status === STATUS.PAID;
 
   const clearForm = () => {
     setTitle("");
@@ -45,11 +63,29 @@ const Edit = ({ navigation, route }) => {
       paidOn: paidOn?.toJSON(),
       amount: amount,
       receivedOn: receivedOn?.toJSON(),
-      status: status.value,
+      status: status,
     };
     clearForm();
     store.dispatch(edit({ newBill, month, year }));
     navigation.navigate("Home");
+  };
+
+  const removeBill = () => {
+    Alert.alert(
+      "Remover despesa",
+      "Deseja mesmo remover permanentemente esta despesa? Ela será removida de todos os meses.",
+      [
+        { text: "Não", onPress: () => {} },
+        {
+          text: "Sim",
+          onPress: () => {
+            store.dispatch(remove(bill.id));
+            navigation.navigate("Home");
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   const onTitleChange = (text) => {
@@ -64,38 +100,32 @@ const Edit = ({ navigation, route }) => {
   return (
     <SafeContainer>
       <Container>
-        <FormArea>
-          <Input
-            icon="file-edit-outline"
-            placeholder="Título da despesa"
-            onChange={onTitleChange}
-            value={title}
-            helper="Isto será alterado em todos os meses"
-            hasHelper={hasWarning}
-          />
-
-          {shouldShowAmount && (
+        <Input
+          icon="file-edit-outline"
+          placeholder="Título da despesa"
+          onChange={onTitleChange}
+          value={title}
+          helper="Isto será alterado em todos os meses"
+          hasHelper={hasWarning}
+          fontSize="20px"
+          fontWeight="bold"
+        />
+        <Header>
+          <AmountRow>
+            <Amount>R$</Amount>
             <Input
-              icon="credit-card-outline"
-              placeholder="R$"
+              placeholder="0,00"
               keyboardType="decimal-pad"
               value={amount}
               onChange={(value) => setAmount(value)}
+              fontSize="42px"
+              fontWeight="bold"
             />
-          )}
+          </AmountRow>
 
-          <Input
-            mode="picker"
-            icon="check"
-            iconColor={statusColor[status.value]}
-            borderColor={statusColor[status.value]}
-            placeholder="Status da despesa"
-            value={status}
-            title="Status"
-            items={pickerStatus}
-            onChange={setStatus}
-          />
-
+          <DateField>{`${MONTHS[month]} - ${year}`}</DateField>
+        </Header>
+        <FormArea>
           {shouldShowReceived && (
             <Input
               mode="date"
@@ -104,9 +134,9 @@ const Edit = ({ navigation, route }) => {
               value={receivedOn}
               title="Recebido em"
               onChange={setReceivedOn}
+              label="Recebido em"
             />
           )}
-
           {shouldShowPaid && (
             <Input
               mode="date"
@@ -115,15 +145,38 @@ const Edit = ({ navigation, route }) => {
               value={paidOn}
               title="Pago em"
               onChange={setPaidOn}
+              label="Pago em"
             />
           )}
-
+        </FormArea>
+        <PillsWrapper>
+          <Pill
+            value={statusName[STATUS.PAID]}
+            active={status === STATUS.PAID}
+            activeColor={statusColor[STATUS.PAID]}
+            onPress={() => setStatus(STATUS.PAID)}
+          />
+          <Pill
+            value={statusName[STATUS.NOT_RECEIVED]}
+            active={status === STATUS.NOT_RECEIVED}
+            activeColor={statusColor[STATUS.NOT_RECEIVED]}
+            onPress={() => setStatus(STATUS.NOT_RECEIVED)}
+          />
+          <Pill
+            value={statusName[STATUS.RECEIVED]}
+            active={status === STATUS.RECEIVED}
+            activeColor={statusColor[STATUS.RECEIVED]}
+            onPress={() => setStatus(STATUS.RECEIVED)}
+          />
+        </PillsWrapper>
+        <ButtonWrapper>
           <Button
             onPress={submit}
-            value={`EDITAR EM ${MONTHS[month].toUpperCase()}`}
+            value="Salvar"
             disabled={title.trim().length === 0}
           />
-        </FormArea>
+          <Button onPress={removeBill} value="Remover" outlined />
+        </ButtonWrapper>
       </Container>
     </SafeContainer>
   );

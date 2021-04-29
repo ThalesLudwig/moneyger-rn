@@ -3,18 +3,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
 export const ButtonWrapper = styled.View`
-  margin-bottom: 25px;
   flex-direction: row;
-  border-color: ${({ disabled, theme }) => (!disabled ? theme.PRIMARY : theme.DISABLED)};
-  border-width: 3px;
   border-radius: 40px;
   align-items: center;
-  background-color: ${({ disabled, theme }) =>
-    !disabled ? theme.PRIMARY : theme.DISABLED};
-  height: 60px;
+  background-color: ${({ disabled, theme, outlined }) => {
+    if (disabled) return theme.DISABLED;
+    if (outlined) return theme.BACKGROUND;
+    return theme.PRIMARY;
+  }};
   justify-content: center;
-  padding: 0px 20px;
-  align-self: ${({ stretch }) => (stretch ? "auto" : "center")};
+  padding: 15px 50px;
+  margin: 0px 10px 0px 0px;
+
+  border-color: ${({ theme }) => theme.DISABLED};
+  border-width: ${({ outlined }) => (outlined ? "1px" : "0px")};
 `;
 
 export const ButtonIcon = styled.View`
@@ -27,6 +29,12 @@ export const Icon = styled(MaterialCommunityIcons).attrs`
 `;
 
 export const Title = styled.Text`
-  color: ${({ theme, disabled }) => disabled ? theme.TEXT : COLORS.WHITE};
+  color: ${({ disabled, theme, outlined }) => {
+    if (disabled) return theme.TEXT;
+    if (outlined) return theme.TEXT;
+    return COLORS.WHITE;
+  }};
+
   font-size: 16px;
+  font-weight: bold;
 `;

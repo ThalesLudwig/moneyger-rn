@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity } from "react-native";
 import moment from "moment";
 import {
   Input,
@@ -11,6 +11,7 @@ import {
   Helper,
   HelperWrapper,
   DatePickerPlaceholder,
+  Label,
 } from "./InputStyled";
 
 const InputContainer = ({
@@ -26,6 +27,10 @@ const InputContainer = ({
   title,
   helper,
   hasHelper,
+  hasBorder,
+  fontWeight,
+  fontSize,
+  label,
 }) => {
   const renderInput = () => {
     switch (mode) {
@@ -36,6 +41,8 @@ const InputContainer = ({
             keyboardType={keyboardType}
             onChangeText={(text) => onChange(text)}
             value={value.toString()}
+            fontWeight={fontWeight}
+            fontSize={fontSize}
           />
         );
       case "date":
@@ -48,9 +55,14 @@ const InputContainer = ({
             iosPickerMode="date"
             doneText="Adicionar"
             InputComponent={(e) => (
-              <TouchableOpacity onPress={() => e.togglePicker()} style={{ flex: 1, justifyContent: "center" }}>
+              <TouchableOpacity
+                onPress={() => e.togglePicker()}
+                style={{ flex: 1, justifyContent: "center" }}
+              >
                 <DatePickerPlaceholder>
-                  {!!value ? moment(value, "ddd MMM DD YYYY").format("DD/MM/YYYY") : placeholder}
+                  {!!value
+                    ? moment(value, "ddd MMM DD YYYY").format("DD/MM/YYYY")
+                    : placeholder}
                 </DatePickerPlaceholder>
               </TouchableOpacity>
             )}
@@ -73,17 +85,22 @@ const InputContainer = ({
             keyboardType={keyboardType}
             onChangeText={(text) => onChange(text)}
             value={value.toString()}
+            fontWeight={fontWeight}
+            fontSize={fontSize}
           />
         );
     }
   };
 
   return (
-    <HelperWrapper>
-      <InputWrapper color={borderColor}>
-        <InputIcon color={iconColor}>
-          <Icon name={icon} />
-        </InputIcon>
+    <HelperWrapper hasHelper={hasHelper}>
+      {label && <Label>{label}</Label>}
+      <InputWrapper color={borderColor} hasBorder={hasBorder}>
+        {icon && (
+          <InputIcon color={iconColor}>
+            <Icon name={icon} />
+          </InputIcon>
+        )}
         {renderInput()}
       </InputWrapper>
       {hasHelper && <Helper>{helper}</Helper>}
