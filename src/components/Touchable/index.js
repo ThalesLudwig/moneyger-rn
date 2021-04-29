@@ -7,12 +7,12 @@ import {
 
 const Touchable = ({ onPress = () => {}, children }) => {
   switch (Platform.OS) {
-    case "android":
-      return (
-        <TouchableNativeFeedback onPress={onPress}>
-          {children}
-        </TouchableNativeFeedback>
-      );
+    // case "android":
+    //   return (
+    //     <TouchableNativeFeedback onPress={onPress}>
+    //       {children}
+    //     </TouchableNativeFeedback>
+    //   );
     case "ios":
       return <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
     default:
