@@ -13,29 +13,30 @@ const Tab = AnimatedTabBarNavigator();
 const ICON_SIZE = 24;
 
 const HomeNavigator = ({ theme }) => {
+  const options = {
+    headerStyle: { backgroundColor: theme.BACKGROUND },
+    headerTitleStyle: { color: theme.TEXT },
+    headerTintColor: theme.TEXT,
+  };
+
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.BACKGROUND },
-        headerTitleStyle: { color: theme.TEXT },
-      }}
-    >
-      <Stack.Screen name="Home" component={Home} options={{ title: "Despesas" }} />
-      <Stack.Screen name="Edit" component={Edit} options={{ title: "Editar Despesa" }} />
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} options={{ title: "Despesas", ...options }} />
+      <Stack.Screen name="Edit" component={Edit} options={{ title: "Editar Despesa", ...options }} />
     </Stack.Navigator>
   );
 };
 
 const OptionsNavigator = ({ theme }) => {
+  const options = {
+    headerStyle: { backgroundColor: theme.BACKGROUND },
+    headerTitleStyle: { color: theme.TEXT },
+    headerTintColor: theme.TEXT,
+  };
+
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleAlign: "center",
-        headerStyle: { backgroundColor: theme.CARD },
-        headerTitleStyle: { color: theme.TEXT },
-      }}
-    >
-      <Stack.Screen name="Options" component={Options} options={{ title: "Ajustes" }} />
+    <Stack.Navigator>
+      <Stack.Screen name="Options" component={Options} options={{ title: "Ajustes", ...options }} />
     </Stack.Navigator>
   );
 };
@@ -48,7 +49,7 @@ const getRouteIcon = (route, themeColor) => ({
       case "Options":
         return <Icon name="settings" size={ICON_SIZE} color={focused ? color : themeColor} focused={focused} />;
       case "New":
-        return <Icon name="plus-circle" size={ICON_SIZE} color={focused ? color : themeColor} focused={focused} />;
+        return <Icon name="dollar-sign" size={ICON_SIZE} color={focused ? color : themeColor} focused={focused} />;
       default:
         return <Icon name="home" size={ICON_SIZE} color={focused ? color : themeColor} focused={focused} />;
     }

@@ -10,7 +10,7 @@ export const Main = styled.SafeAreaView`
 export const ScrollWrapper = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 })`
   width: 100%;
@@ -19,7 +19,8 @@ export const ScrollWrapper = styled.ScrollView.attrs({
 export const ContentWrapper = styled.View`
   width: 100%;
   max-width: 600px;
-  padding: 0px 25px 0px 25px;
+  padding: 0px 25px;
+  margin-bottom: 100px;
 `;
 
 export const Empty = styled.Image.attrs({
