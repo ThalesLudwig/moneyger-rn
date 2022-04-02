@@ -1,23 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
-import THEMES, { THEME_ENUM } from "../../constants/theme";
+import { THEME_ENUM } from "../../constants/theme";
+import { useTheme } from "../../hooks/useTheme";
+import { useSelector } from "react-redux";
 
-const ThemeManager = ({ theme, children }) => {
-  const themeSwitcher = () => {
-    switch (theme.value) {
-      case THEME_ENUM.DARK:
-        return THEMES.DARK;
-      case THEME_ENUM.LIGHT:
-        return THEMES.LIGHT;
-      default:
-        return THEMES.LIGHT;
-    }
-  };
+const ThemeManager = ({ children }) => {
+  const { value: currentThemeValue } = useSelector((state) => state.theme);
+  const theme = useTheme();
 
   const statusBarSwitcher = () => {
-    switch (theme.value) {
+    switch (currentThemeValue) {
       case THEME_ENUM.DARK:
         return "light";
       case THEME_ENUM.LIGHT:
@@ -28,15 +21,11 @@ const ThemeManager = ({ theme, children }) => {
   };
 
   return (
-    <ThemeProvider theme={themeSwitcher()}>
+    <ThemeProvider theme={theme}>
       <StatusBar style={statusBarSwitcher()} />
       {children}
     </ThemeProvider>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { theme: state.theme };
-};
-
-export default connect(mapStateToProps)(ThemeManager);
+export default ThemeManager;

@@ -11,7 +11,7 @@ export const LIGHT = {
   TEXT: COLORS.DARK,
   DISABLED: COLORS.GREY,
   CARD: COLORS.WHITE,
-  ICONS: COLORS.WHITE,
+  ICONS: COLORS.DARK,
 };
 
 export const DARK = {

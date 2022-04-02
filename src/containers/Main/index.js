@@ -3,26 +3,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import Navigator from "../../Navigator";
 import ThemeManager from "../../components/ThemeManager";
 import IntroSlider from "../../components/IntroSlider";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const Main = ({ instructions }) => {
-  const renderContent = () => {
-    if (instructions.value) {
-      return <IntroSlider />;
-    } else {
-      return (
+const Main = () => {
+  const { value: instructions } = useSelector((state) => state.instructions);
+
+  return (
+    <ThemeManager>
+      {instructions ? (
+        <IntroSlider />
+      ) : (
         <NavigationContainer>
           <Navigator />
         </NavigationContainer>
-      );
-    }
-  };
-
-  return <ThemeManager>{renderContent()}</ThemeManager>;
+      )}
+    </ThemeManager>
+  );
 };
 
-const mapStateToProps = (state) => {
-  return { instructions: state.instructions };
-};
-
-export default connect(mapStateToProps)(Main);
+export default Main;
