@@ -1,23 +1,15 @@
 import React, { useState } from "react";
+import { KeyboardAvoidingView } from "react-native";
 import STATUS from "../../constants/status";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
 import { add } from "../../config/billSlice";
 import store from "../../config/store";
-import {
-  SafeContainer,
-  Container,
-  FormArea,
-  MoneyWrapper,
-  Money,
-  MoneyText,
-  ButtonArea,
-  InputWrapper,
-} from "./NewStyled";
+import { TextInput, Button } from "react-native-paper";
+import { SafeContainer, Container, Title, InputWrapper, ButtonWrapper } from "./NewStyled";
 
 const New = ({ navigation }) => {
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
+  const isDisabled = title.trim().length === 0;
 
   const removeComma = (amount) => {
     if (!amount) return "";
@@ -31,7 +23,12 @@ const New = ({ navigation }) => {
     return parsedAmount;
   };
 
-  const submit = () => {
+  const onCleanForm = () => {
+    setTitle("");
+    setAmount(0);
+  };
+
+  const onSubmit = () => {
     const bill = {
       id: new Date().getUTCMilliseconds(),
       title: title,
@@ -40,45 +37,39 @@ const New = ({ navigation }) => {
       data: {},
     };
     store.dispatch(add(bill));
-    setTitle("");
-    setAmount(0);
+    clearForm();
     navigation.navigate("Home");
   };
 
   return (
     <SafeContainer>
       <Container>
-        <MoneyWrapper>
-          <Money />
-          <MoneyText>Add a bill</MoneyText>
-        </MoneyWrapper>
-        <FormArea>
+        <Title>Add a new bill</Title>
+        <KeyboardAvoidingView>
           <InputWrapper>
-            <Input
-              icon="file-text"
-              placeholder="Rent"
-              onChange={setTitle}
-              value={title}
-              hasBorder
-              label="Bill name"
-              required
-            />
+            <TextInput onChangeText={setTitle} value={title} hasBorder label="Bill name" required mode="outlined" />
           </InputWrapper>
           <InputWrapper>
-            <Input
-              icon="credit-card"
+            <TextInput
               placeholder="0,00"
-              onChange={setAmount}
+              onChangeText={setAmount}
               value={removeDot(amount)}
               hasBorder
               keyboardType="decimal-pad"
-              label="Value"
+              label="$ 0,00"
+              required
+              mode="outlined"
             />
           </InputWrapper>
-        </FormArea>
-        <ButtonArea>
-          <Button onPress={submit} value="Add bill" disabled={title.trim().length === 0} />
-        </ButtonArea>
+          <ButtonWrapper>
+            <Button mode="contained" onPress={onSubmit} disabled={isDisabled}>
+              Add new bill
+            </Button>
+          </ButtonWrapper>
+          <Button mode="outlined" onPress={onCleanForm}>
+            Clean Form
+          </Button>
+        </KeyboardAvoidingView>
       </Container>
     </SafeContainer>
   );

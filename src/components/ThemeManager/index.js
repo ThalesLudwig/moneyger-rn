@@ -24,6 +24,7 @@ const ThemeManager = ({ children }) => {
   const paperTheme = {
     ...PaperTheme,
     roundness: 10,
+    dark: currentThemeValue === 0,
     colors: {
       ...PaperTheme.colors,
       primary: theme.PRIMARY,
@@ -31,6 +32,7 @@ const ThemeManager = ({ children }) => {
       text: theme.TEXT,
       background: theme.BACKGROUND,
       disabled: theme.DISABLED,
+      placeholder: theme.DISABLED,
       surface: theme.CARD,
     },
   };

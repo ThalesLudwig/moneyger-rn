@@ -7,7 +7,7 @@ import store from "../../config/store";
 import { THEME_ENUM } from "../../constants/theme";
 import { SafeContainer, SwitchWrapper } from "./OptionsStyled";
 import { showInstructions } from "../../config/instructionsSlice";
-import { Switch, Subheading } from "react-native-paper";
+import { Switch, Subheading, Divider } from "react-native-paper";
 
 const Options = ({ theme }) => {
   const clearData = () => {
@@ -48,6 +48,7 @@ const Options = ({ theme }) => {
         <Subheading>Dark Mode</Subheading>
         <Switch value={theme.value === 0} onValueChange={switchTheme} />
       </SwitchWrapper>
+      <Divider />
       <SwitchWrapper>
         <Subheading>Clear data</Subheading>
         <Switch value={false} onValueChange={clearData} />

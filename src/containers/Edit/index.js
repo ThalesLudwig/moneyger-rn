@@ -133,7 +133,7 @@ const Edit = ({ navigation, route }) => {
           {shouldShowReceived && (
             <Input
               mode="date"
-              icon="calendar-blank"
+              icon="calendar"
               placeholder="Received on"
               value={receivedOn}
               title="Received on"
@@ -144,7 +144,7 @@ const Edit = ({ navigation, route }) => {
           {shouldShowPaid && (
             <Input
               mode="date"
-              icon="calendar-check"
+              icon="calendar"
               placeholder="Paid on"
               value={paidOn}
               title="Paid on"

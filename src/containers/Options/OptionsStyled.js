@@ -9,5 +9,5 @@ export const SwitchWrapper = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px 0 24px;
+  padding: 18px 24px;
 `;
