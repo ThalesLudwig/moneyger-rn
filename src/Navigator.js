@@ -21,8 +21,8 @@ const HomeNavigator = ({ theme }) => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={{ title: "Despesas", ...options }} />
-      <Stack.Screen name="Edit" component={Edit} options={{ title: "Editar Despesa", ...options }} />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Bills", ...options }} />
+      <Stack.Screen name="Edit" component={Edit} options={{ title: "Edit bill", ...options }} />
     </Stack.Navigator>
   );
 };
@@ -36,7 +36,7 @@ const OptionsNavigator = ({ theme }) => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Options" component={Options} options={{ title: "Ajustes", ...options }} />
+      <Stack.Screen name="Options" component={Options} options={{ title: "Settings", ...options }} />
     </Stack.Navigator>
   );
 };

@@ -7,10 +7,7 @@ import Pill from "../../components/Pill";
 import Card from "../../components/Card";
 import toBrazilianReal from "../../utils/toBrazilianReal";
 import FilterConstants from "../../constants/filters";
-import StatusConstants, {
-  statusName,
-  statusColor,
-} from "../../constants/status";
+import StatusConstants, { statusName, statusColor } from "../../constants/status";
 import {
   Main,
   Empty,
@@ -33,8 +30,8 @@ const Home = ({ bills, navigation }) => {
     return (
       <EmptyWrapper>
         <Empty />
-        <EmptyText>Sem despesas para exibir.</EmptyText>
-        <EmptyText>Adicione algo!</EmptyText>
+        <EmptyText>No bills to display.</EmptyText>
+        <EmptyText>Add something!</EmptyText>
       </EmptyWrapper>
     );
   };
@@ -43,17 +40,15 @@ const Home = ({ bills, navigation }) => {
     return (
       <EmptyWrapper>
         <NoResults />
-        <EmptyText>Nenhuma despesa encontrada</EmptyText>
-        <EmptyText>com o filtro selecionado.</EmptyText>
+        <EmptyText>No bills found</EmptyText>
+        <EmptyText>with the selected filter.</EmptyText>
       </EmptyWrapper>
     );
   };
 
   const filterBills = (currentBill) => {
     const currentStatus = currentBill.data?.[year]?.[month]?.status || 0;
-    return (
-      currentStatus === activeFilter || activeFilter === FilterConstants.ALL
-    );
+    return currentStatus === activeFilter || activeFilter === FilterConstants.ALL;
   };
 
   const getTotalAmount = () => {
@@ -62,60 +57,41 @@ const Home = ({ bills, navigation }) => {
       return parseFloat(bills.value[0].amount) || 0;
     }
     const total = bills.value.reduce((acc, curr) => {
-      const parsedAcc =
-        parseFloat(acc) ||
-        parseFloat(acc.data?.[year]?.[month]?.amount) ||
-        parseFloat(acc.amount) ||
-        0;
-      const parsedCurr =
-        parseFloat(curr.data?.[year]?.[month]?.amount) ||
-        parseFloat(curr.amount) ||
-        0;
+      const parsedAcc = parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || parseFloat(acc.amount) || 0;
+      const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || parseFloat(curr.amount) || 0;
       return parsedAcc + parsedCurr;
     });
     return total;
   };
 
   const getPaidAmount = () => {
-    const result = bills.value.filter(
-      (b) => b.data?.[year]?.[month]?.status === StatusConstants.PAID
-    );
+    const result = bills.value.filter((b) => b.data?.[year]?.[month]?.status === StatusConstants.PAID);
     if (result.length === 0) return 0;
     if (result.length === 1) {
       return parseFloat(result[0].data?.[year]?.[month]?.amount);
     }
     return result.reduce((acc, curr) => {
-      const parsedAcc =
-        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
+      const parsedAcc = parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
       const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
       return parsedAcc + parsedCurr;
     });
   };
 
   const getReceivedAmount = () => {
-    const result = bills.value.filter(
-      (b) => b.data?.[year]?.[month]?.status === StatusConstants.RECEIVED
-    );
+    const result = bills.value.filter((b) => b.data?.[year]?.[month]?.status === StatusConstants.RECEIVED);
     if (result.length === 0) return 0;
     if (result.length === 1) {
       return parseFloat(result[0].data?.[year]?.[month]?.amount);
     }
     return result.reduce((acc, curr) => {
-      const parsedAcc =
-        parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
+      const parsedAcc = parseFloat(acc) || parseFloat(acc.data?.[year]?.[month]?.amount) || 0;
       const parsedCurr = parseFloat(curr.data?.[year]?.[month]?.amount) || 0;
       return parsedAcc + parsedCurr;
     });
   };
 
   const getCurrentAmount = (currentBill) => {
-    return toBrazilianReal(
-      parseFloat(
-        currentBill.data?.[year]?.[month]?.amount ||
-          currentBill.amount ||
-          "0,00"
-      )
-    );
+    return toBrazilianReal(parseFloat(currentBill.data?.[year]?.[month]?.amount || currentBill.amount || "0,00"));
   };
 
   const renderBills = () => {
@@ -150,31 +126,28 @@ const Home = ({ bills, navigation }) => {
       <ScrollWrapper>
         <Cards>
           <Card
-            title="Total adicionado"
+            title="Total added"
             amount={toBrazilianReal(getTotalAmount())}
             color={statusColor[StatusConstants.NOT_RECEIVED]}
           />
           <Card
-            title="Total pago"
+            title="Total paid"
             amount={toBrazilianReal(getPaidAmount())}
             color={statusColor[StatusConstants.PAID]}
           />
           <Card
-            title="Total a pagar"
+            title="Total to pay"
             amount={toBrazilianReal(getReceivedAmount())}
             color={statusColor[StatusConstants.RECEIVED]}
           />
         </Cards>
         <ContentWrapper>
-          <Calendar
-            onNext={(date) => setDate(date)}
-            onPrevious={(date) => setDate(date)}
-          />
+          <Calendar onNext={(date) => setDate(date)} onPrevious={(date) => setDate(date)} />
           <Filters>
             <Pill
               active={activeFilter === FilterConstants.ALL}
               onPress={() => setActiveFilter(FilterConstants.ALL)}
-              value="Todos"
+              value="Everything"
             />
             <Pill
               active={activeFilter === FilterConstants.PAID}

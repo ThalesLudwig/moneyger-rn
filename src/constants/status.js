@@ -7,9 +7,9 @@ export const status = {
 };
 
 export const statusName = {
-  [status.NOT_RECEIVED]: "Não Recebido",
-  [status.RECEIVED]: "Recebido",
-  [status.PAID]: "Pago",
+  [status.NOT_RECEIVED]: "Not received",
+  [status.RECEIVED]: "Received",
+  [status.PAID]: "Paid",
 };
 
 export const statusColor = {

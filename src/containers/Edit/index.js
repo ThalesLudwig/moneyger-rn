@@ -30,19 +30,13 @@ const Edit = ({ navigation, route }) => {
   const { bill, year, month } = route.params;
   const [status, setStatus] = useState(bill.data?.[year]?.[month]?.status || 0);
   const [receivedOn, setReceivedOn] = useState(
-    bill.data?.[year]?.[month]?.receivedOn
-      ? new Date(bill.data?.[year]?.[month]?.receivedOn)
-      : null
+    bill.data?.[year]?.[month]?.receivedOn ? new Date(bill.data?.[year]?.[month]?.receivedOn) : null,
   );
   const [paidOn, setPaidOn] = useState(
-    bill.data?.[year]?.[month]?.paidOn
-      ? new Date(bill.data?.[year]?.[month]?.paidOn)
-      : null
+    bill.data?.[year]?.[month]?.paidOn ? new Date(bill.data?.[year]?.[month]?.paidOn) : null,
   );
   const [title, setTitle] = useState(bill.title);
-  const [amount, setAmount] = useState(
-    bill.data?.[year]?.[month]?.amount || bill.amount || ""
-  );
+  const [amount, setAmount] = useState(bill.data?.[year]?.[month]?.amount || bill.amount || "");
   const [hasWarning, setHasWarning] = useState(false);
 
   const shouldShowReceived = status !== STATUS.NOT_RECEIVED;
@@ -82,19 +76,19 @@ const Edit = ({ navigation, route }) => {
 
   const removeBill = () => {
     Alert.alert(
-      "Remover despesa",
-      "Deseja mesmo remover permanentemente esta despesa? Ela será removida de todos os meses.",
+      "Remove bill?",
+      "Do you really wish to permanently remove this bill? This cannot be undone.",
       [
-        { text: "Não", onPress: () => {} },
+        { text: "No, cancel", onPress: () => {} },
         {
-          text: "Sim",
+          text: "Yes, remove",
           onPress: () => {
             store.dispatch(remove(bill.id));
             navigation.navigate("Home");
           },
         },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
   };
 
@@ -111,11 +105,11 @@ const Edit = ({ navigation, route }) => {
     <SafeContainer>
       <Container>
         <Input
-          icon="file-edit-outline"
-          placeholder="Título da despesa"
+          icon="file-minus"
+          placeholder="Bill name"
           onChange={onTitleChange}
           value={title}
-          helper="Isto será alterado em todos os meses"
+          helper="This will change every month."
           hasHelper={hasWarning}
           fontSize="20px"
           fontWeight="bold"
@@ -140,22 +134,22 @@ const Edit = ({ navigation, route }) => {
             <Input
               mode="date"
               icon="calendar-blank"
-              placeholder="Recebido em"
+              placeholder="Received on"
               value={receivedOn}
-              title="Recebido em"
+              title="Received on"
               onChange={setReceivedOn}
-              label="Recebido em"
+              label="Received on"
             />
           )}
           {shouldShowPaid && (
             <Input
               mode="date"
               icon="calendar-check"
-              placeholder="Pago em"
+              placeholder="Paid on"
               value={paidOn}
-              title="Pago em"
+              title="Paid on"
               onChange={setPaidOn}
-              label="Pago em"
+              label="Paid on"
             />
           )}
         </FormArea>
@@ -180,12 +174,8 @@ const Edit = ({ navigation, route }) => {
           />
         </PillsWrapper>
         <ButtonWrapper>
-          <Button
-            onPress={submit}
-            value="Salvar"
-            disabled={title.trim().length === 0}
-          />
-          <Button onPress={removeBill} value="Remover" outlined />
+          <Button onPress={submit} value="Submit" disabled={title.trim().length === 0} />
+          <Button onPress={removeBill} value="Remove" outlined />
         </ButtonWrapper>
       </Container>
     </SafeContainer>

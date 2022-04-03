@@ -16,18 +16,17 @@ const setPrevious = (now, setNow, onPrevious) => {
 };
 
 const Calendar = ({ onNext, onPrevious }) => {
-  moment.locale(["pt", "en"]);
   const [now, setNow] = useState(moment());
 
   return (
     <Container>
       <MonthWrapper>
         <TouchableOpacity onPress={() => setPrevious(now, setNow, onPrevious)}>
-          <Icon name="chevron-back" size={22} />
+          <Icon name="chevron-left" size={22} />
         </TouchableOpacity>
         <Month>{now.format("MMMM")}</Month>
         <TouchableOpacity onPress={() => setNext(now, setNow, onNext)}>
-          <Icon name="chevron-forward" size={22} />
+          <Icon name="chevron-right" size={22} />
         </TouchableOpacity>
       </MonthWrapper>
       <Year>{now.format("YYYY")}</Year>

@@ -1,9 +1,6 @@
 import styled from "styled-components/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  Picker as RNPicker,
-  DatePicker as RNDatePicker,
-} from "react-native-woodpicker";
+import { Feather } from "@expo/vector-icons";
+import { Picker as RNPicker, DatePicker as RNDatePicker } from "react-native-woodpicker";
 
 export const InputWrapper = styled.View`
   flex-direction: row;
@@ -35,7 +32,7 @@ export const InputIcon = styled.View`
   justify-content: center;
 `;
 
-export const Icon = styled(MaterialCommunityIcons)`
+export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.TEXT};
   font-size: 30px;
 `;

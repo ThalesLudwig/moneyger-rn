@@ -50,38 +50,34 @@ const New = ({ navigation }) => {
       <Container>
         <MoneyWrapper>
           <Money />
-          <MoneyText>Adicionar Despesa</MoneyText>
+          <MoneyText>Add a bill</MoneyText>
         </MoneyWrapper>
         <FormArea>
           <InputWrapper>
             <Input
-              icon="file-edit-outline"
-              placeholder="Ex: Aluguel"
+              icon="file-text"
+              placeholder="Rent"
               onChange={setTitle}
               value={title}
               hasBorder
-              label="Título da despesa"
+              label="Bill name"
               required
             />
           </InputWrapper>
           <InputWrapper>
             <Input
-              icon="credit-card-outline"
+              icon="credit-card"
               placeholder="0,00"
               onChange={setAmount}
               value={removeDot(amount)}
               hasBorder
               keyboardType="decimal-pad"
-              label="Valor inicial"
+              label="Value"
             />
           </InputWrapper>
         </FormArea>
         <ButtonArea>
-          <Button
-            onPress={submit}
-            value="Adicionar"
-            disabled={title.trim().length === 0}
-          />
+          <Button onPress={submit} value="Add bill" disabled={title.trim().length === 0} />
         </ButtonArea>
       </Container>
     </SafeContainer>

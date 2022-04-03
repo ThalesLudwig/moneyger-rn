@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export const Container = styled.View`
   flex-direction: row;
@@ -8,7 +8,7 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
-export const Icon = styled(Ionicons)`
+export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.TEXT};
   width: 20px;
 `;

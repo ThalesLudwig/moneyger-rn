@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import STATUS_LIST from "../../constants/status";
 import COLORS from "../../constants/colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export const getStatusColor = (status) => {
   switch (status) {
@@ -43,11 +43,6 @@ export const ColumnWrapper = styled.View`
   align-items: flex-start;
 `;
 
-export const Text = styled.Text`
-  font-size: 14px;
-  color: ${({ theme }) => theme.DISABLED};
-`;
-
 export const Amount = styled.Text`
   font-size: 14px;
   color: ${({ theme }) => theme.DISABLED};
@@ -69,7 +64,7 @@ export const BillStatus = styled.View`
   margin-right: 15px;
 `;
 
-export const Icon = styled(MaterialCommunityIcons)`
+export const Icon = styled(Feather)`
   margin: 10px 0px;
   color: ${({ theme }) => theme.DISABLED};
 `;

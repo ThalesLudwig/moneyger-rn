@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
 export const ButtonWrapper = styled.View`
@@ -23,7 +23,7 @@ export const ButtonIcon = styled.View`
   background-color: ${({ theme }) => theme.PRIMARY};
 `;
 
-export const Icon = styled(MaterialCommunityIcons).attrs`
+export const Icon = styled(Feather).attrs`
   color: ${({ theme }) => theme.TEXT};
   font-size: 22px;
 `;

@@ -10,22 +10,22 @@ import { showInstructions } from "../../config/instructionsSlice";
 const slides = [
   {
     key: "1",
-    title: "Simples e prático",
-    text: "Mantenha o controle do que já foi pago",
+    title: "Simple and easy",
+    text: "Control what was already paid",
     image: lightbulb,
     backgroundColor: "#65D8B5",
   },
   {
     key: "2",
-    title: "Suas contas são registradas em todos os meses",
-    text: "E controladas individualmente!",
+    title: "Your bills are registered for every month",
+    text: "And controlled individually!",
     image: customize,
     backgroundColor: "#E79D5B",
   },
   {
     key: "3",
-    title: "Nunca mais esqueça de uma despesa",
-    text: "É só relaxar!",
+    title: "Never forget a bill anymore",
+    text: "Just relax!",
     image: campfire,
     backgroundColor: "#E1546D",
   },
@@ -46,15 +46,7 @@ const IntroSlider = () => {
     store.dispatch(showInstructions());
   };
 
-  return (
-    <AppIntroSlider
-      nextLabel="Próximo"
-      doneLabel="Entendi"
-      renderItem={render}
-      data={slides}
-      onDone={onClose}
-    />
-  );
+  return <AppIntroSlider nextLabel="Próximo" doneLabel="Entendi" renderItem={render} data={slides} onDone={onClose} />;
 };
 
 export default IntroSlider;

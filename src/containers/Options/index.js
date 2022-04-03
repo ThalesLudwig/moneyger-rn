@@ -11,20 +11,20 @@ import { showInstructions } from "../../config/instructionsSlice";
 const Options = ({ theme }) => {
   const clearData = () => {
     Alert.alert(
-      "Limpar dados",
-      "Deseja mesmo remover permanentemente todos os dados? Isto não poderá ser desfeito.",
+      "Clear data?",
+      "Do you really wish to permanently remove all data? This cannot be undone.",
       [
-        { text: "Não", onPress: () => {} },
+        { text: "No, cancel", onPress: () => {} },
         {
-          text: "Sim",
+          text: "Yes, remove",
           onPress: () => {
             store.dispatch(clear());
             store.dispatch(showInstructions());
-            Alert.alert("Dados removidos");
+            Alert.alert("Data removed");
           },
         },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
   };
 
@@ -44,18 +44,18 @@ const Options = ({ theme }) => {
   const getThemeOption = () => {
     switch (theme.value) {
       case THEME_ENUM.DARK:
-        return "Modo Claro";
+        return "Light Mode";
       case THEME_ENUM.LIGHT:
-        return "Modo Escuro";
+        return "Dark Mode";
       default:
-        return "Alterar modo de cores";
+        return "Change color scheme";
     }
   };
 
   return (
     <SafeContainer>
       <Row onPress={clearData}>
-        <OptionText>Limpar dados</OptionText>
+        <OptionText>Clear data</OptionText>
       </Row>
       <Row onPress={switchTheme}>
         <OptionText>{getThemeOption()}</OptionText>
