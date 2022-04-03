@@ -5,30 +5,26 @@ import MONTHS from "../../constants/months";
 import DateInput from "../../components/DateInput";
 import Pill from "../../components/Pill";
 import { edit, remove } from "../../config/billSlice";
-import store from "../../config/store";
 import { TextInput, Button } from "react-native-paper";
 import { SafeContainer, Container, Padding, PillsWrapper, Title } from "./EditStyled";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
 
 const Edit = ({ navigation, route }) => {
+  const { bill } = route.params;
+  const [status, setStatus] = useState(bill.status || 0);
+  const [receivedOn, setReceivedOn] = useState(bill.receivedOn || new Date());
+  const [paidOn, setPaidOn] = useState(bill.paidOn || new Date());
+  const [title, setTitle] = useState(bill.title || "");
+  const [amount, setAmount] = useState(bill.amount || 0);
+  const dispatch = useDispatch();
+  const { value: currentDate } = useSelector((state) => state.date);
+
   const pickerStatus = [
     { label: statusName[STATUS.NOT_RECEIVED], value: STATUS.NOT_RECEIVED },
     { label: statusName[STATUS.PAID], value: STATUS.PAID },
     { label: statusName[STATUS.RECEIVED], value: STATUS.RECEIVED },
   ];
-
-  const { bill, year, month } = route.params;
-  const [status, setStatus] = useState(bill.data?.[year]?.[month]?.status || 0);
-  const [receivedOn, setReceivedOn] = useState(
-    bill.data?.[year]?.[month]?.receivedOn ? new Date(bill.data?.[year]?.[month]?.receivedOn) : null,
-  );
-  const [paidOn, setPaidOn] = useState(
-    bill.data?.[year]?.[month]?.paidOn ? new Date(bill.data?.[year]?.[month]?.paidOn) : null,
-  );
-  const [title, setTitle] = useState(bill.title);
-  const [amount, setAmount] = useState(bill.data?.[year]?.[month]?.amount || bill.amount || "");
-
-  const shouldShowReceived = status !== STATUS.NOT_RECEIVED;
-  const shouldShowPaid = status === STATUS.PAID;
 
   const clearForm = () => {
     setTitle("");
@@ -49,16 +45,16 @@ const Edit = ({ navigation, route }) => {
   };
 
   const onSubmit = () => {
-    const newBill = {
+    const editedBill = {
       id: bill.id,
       title: title,
-      paidOn: paidOn?.toJSON(),
+      paidOn: status === STATUS.PAID ? moment(paidOn).format("YYYY-MM-DD") : null,
       amount: removeComma(amount) || 0,
-      receivedOn: receivedOn?.toJSON(),
+      receivedOn: status === STATUS.PAID || status === STATUS.RECEIVED ? moment(receivedOn).format("YYYY-MM-DD") : null,
       status: status,
     };
     clearForm();
-    store.dispatch(edit({ newBill, month, year }));
+    dispatch(edit(editedBill));
     navigation.navigate("Home");
   };
 
@@ -71,7 +67,7 @@ const Edit = ({ navigation, route }) => {
         {
           text: "Yes, remove",
           onPress: () => {
-            store.dispatch(remove(bill.id));
+            useDispatch(remove(bill.id));
             navigation.navigate("Home");
           },
         },
@@ -83,7 +79,9 @@ const Edit = ({ navigation, route }) => {
   return (
     <SafeContainer>
       <Container>
-        <Title>{`${MONTHS[month]} - ${year}`}</Title>
+        <Title>
+          {MONTHS[moment(currentDate).format("M")]}, {moment(currentDate).format("YYYY")}
+        </Title>
         <Padding>
           <TextInput
             placeholder="Bill name"
@@ -108,12 +106,12 @@ const Edit = ({ navigation, route }) => {
             left={<TextInput.Icon name="cash-usd-outline" />}
           />
         </Padding>
-        {shouldShowReceived && (
+        {status !== STATUS.NOT_RECEIVED && (
           <Padding>
             <DateInput placeholder="Received on" value={receivedOn} title="Received on" onChange={setReceivedOn} />
           </Padding>
         )}
-        {shouldShowPaid && (
+        {status === STATUS.PAID && (
           <Padding>
             <DateInput placeholder="Paid on" value={paidOn} title="Paid on" onChange={setPaidOn} />
           </Padding>
@@ -125,12 +123,6 @@ const Edit = ({ navigation, route }) => {
             active={status === STATUS.PAID}
             activeColor={statusColor[STATUS.PAID]}
             onPress={() => setStatus(STATUS.PAID)}
-          />
-          <Pill
-            value={statusName[STATUS.NOT_RECEIVED]}
-            active={status === STATUS.NOT_RECEIVED}
-            activeColor={statusColor[STATUS.NOT_RECEIVED]}
-            onPress={() => setStatus(STATUS.NOT_RECEIVED)}
           />
           <Pill
             value={statusName[STATUS.RECEIVED]}

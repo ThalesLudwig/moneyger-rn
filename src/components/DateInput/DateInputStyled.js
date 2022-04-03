@@ -27,6 +27,11 @@ export const DatePickerPlaceholder = styled.Text`
   padding-left: 10px;
 `;
 
+export const Label = styled.Text`
+  color: ${({ theme }) => theme.DISABLED};
+  padding-left: 10px;
+`;
+
 export const DatePicker = styled(RNDatePicker).attrs(({ theme }) => ({
   placeholderStyle: {
     color: theme.TEXT,

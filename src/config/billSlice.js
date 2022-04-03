@@ -16,22 +16,9 @@ const BillSlice = createSlice({
     },
     edit(state, action) {
       const bills = [...state.value];
-      const { newBill, month, year } = action.payload;
-      const index = bills.findIndex((bill) => bill.id === newBill.id);
-
-      if (bills[index].title !== newBill.title) {
-        bills[index].title = newBill.title;
-      }
-       if (!bills[index].data[year]) {
-        bills[index].data[year] = { [month]: newBill };
-      } else if (!bills[index].data[year][month]) {
-        bills[index].data[year][month] = newBill;
-      } else {
-        bills[index].data[year][month] = {
-          ...bills[index].data[year][month],
-          ...newBill,
-        };
-      }
+      const bill = action.payload;
+      const index = bills.findIndex((billInStore) => billInStore.id === bill.id);
+      bills[index] = bill;
       state.value = bills;
     },
     clear(state) {

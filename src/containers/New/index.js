@@ -5,10 +5,15 @@ import { add } from "../../config/billSlice";
 import store from "../../config/store";
 import { TextInput, Button } from "react-native-paper";
 import { SafeContainer, Container, Title, InputWrapper, ButtonWrapper } from "./NewStyled";
+import moment from "moment";
+import "react-native-get-random-values";
+import { v4 as uuid } from "uuid";
+import DateInput from "../../components/DateInput";
 
 const New = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
+  const [receivedOn, setReceivedOn] = useState(new Date());
   const isDisabled = title.trim().length === 0;
 
   const removeComma = (amount) => {
@@ -26,18 +31,20 @@ const New = ({ navigation }) => {
   const onCleanForm = () => {
     setTitle("");
     setAmount(0);
+    setReceivedOn(new Date());
   };
 
   const onSubmit = () => {
     const bill = {
-      id: new Date().getUTCMilliseconds(),
+      id: uuid(),
       title: title,
       amount: removeComma(amount) || 0,
-      status: STATUS.NOT_RECEIVED,
-      data: {},
+      status: STATUS.PAID,
+      receivedOn: moment(receivedOn).format("YYYY-MM-DD"),
+      paidOn: moment(receivedOn).format("YYYY-MM-DD"),
     };
     store.dispatch(add(bill));
-    clearForm();
+    onCleanForm();
     navigation.navigate("Home");
   };
 
@@ -60,6 +67,9 @@ const New = ({ navigation }) => {
               required
               mode="outlined"
             />
+          </InputWrapper>
+          <InputWrapper>
+            <DateInput placeholder="Received on" value={receivedOn} title="Received on" onChange={setReceivedOn} />
           </InputWrapper>
           <ButtonWrapper>
             <Button mode="contained" onPress={onSubmit} disabled={isDisabled}>
