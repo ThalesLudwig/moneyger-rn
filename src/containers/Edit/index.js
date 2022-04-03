@@ -67,7 +67,7 @@ const Edit = ({ navigation, route }) => {
         {
           text: "Yes, remove",
           onPress: () => {
-            useDispatch(remove(bill.id));
+            dispatch(remove(bill.id));
             navigation.navigate("Home");
           },
         },
