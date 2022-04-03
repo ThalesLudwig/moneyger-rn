@@ -12,14 +12,14 @@ export const TitleWrapper = styled.View`
 `;
 
 export const Container = styled.ScrollView`
-  padding: 10px 30px 0px 30px;
+  padding: 0 30px;
 `;
 
 export const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.TEXT};
-  margin: 15px 0;
+  margin: 10px 0;
 `;
 
 export const Padding = styled.View`
