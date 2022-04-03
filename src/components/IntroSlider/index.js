@@ -10,15 +10,15 @@ import { showInstructions } from "../../config/instructionsSlice";
 const slides = [
   {
     key: "1",
-    title: "Simple and easy",
-    text: "Control what was already paid",
+    title: "Simple and quick",
+    text: "Register your monthly bills with ease.",
     image: lightbulb,
     backgroundColor: "#65D8B5",
   },
   {
     key: "2",
-    title: "Your bills are registered for every month",
-    text: "And controlled individually!",
+    title: "Keep control",
+    text: "See what's already paid or not.",
     image: customize,
     backgroundColor: "#E79D5B",
   },
