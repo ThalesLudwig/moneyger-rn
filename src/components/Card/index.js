@@ -5,7 +5,7 @@ const Card = ({ title, amount, color }) => {
   return (
     <CardWrapper color={color}>
       <Title>{title}</Title>
-      <Amount>R$ {amount}</Amount>
+      <Amount>$ {amount}</Amount>
     </CardWrapper>
   );
 };

@@ -116,7 +116,7 @@ const Edit = ({ navigation, route }) => {
         />
         <Header>
           <AmountRow>
-            <Amount>R$</Amount>
+            <Amount>$</Amount>
             <Input
               placeholder="0,00"
               keyboardType="decimal-pad"

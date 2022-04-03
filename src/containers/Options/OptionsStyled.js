@@ -5,14 +5,9 @@ export const SafeContainer = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.BACKGROUND};
 `;
 
-export const OptionText = styled.Text`
-  font-size: 18px;
-  color: ${({ theme }) => theme.TEXT};
-`;
-
-export const Row = styled.TouchableOpacity`
-  background-color: ${({ theme }) => theme.BACKGROUND};
-  padding: 15px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.DISABLED};
+export const SwitchWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0 24px;
 `;

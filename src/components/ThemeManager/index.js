@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components/native";
 import { THEME_ENUM } from "../../constants/theme";
 import { useTheme } from "../../hooks/useTheme";
 import { useSelector } from "react-redux";
+import { DefaultTheme as PaperTheme, Provider as PaperProvider } from "react-native-paper";
 
 const ThemeManager = ({ children }) => {
   const { value: currentThemeValue } = useSelector((state) => state.theme);
@@ -20,10 +21,24 @@ const ThemeManager = ({ children }) => {
     }
   };
 
+  const paperTheme = {
+    ...PaperTheme,
+    roundness: 10,
+    colors: {
+      ...PaperTheme.colors,
+      primary: theme.PRIMARY,
+      accent: theme.PRIMARY,
+      text: theme.TEXT,
+      background: theme.BACKGROUND,
+      disabled: theme.DISABLED,
+      surface: theme.CARD,
+    },
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style={statusBarSwitcher()} />
-      {children}
+      <PaperProvider theme={paperTheme}>{children}</PaperProvider>
     </ThemeProvider>
   );
 };

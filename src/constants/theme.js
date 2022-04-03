@@ -28,7 +28,7 @@ export const DARK = {
   ICONS: COLORS.GREY,
 };
 
-const THEME = {
+export const THEME = {
   DARK,
   LIGHT,
 };

@@ -5,8 +5,9 @@ import { clear } from "../../config/billSlice";
 import { darkMode, lightMode } from "../../config/themeSlice";
 import store from "../../config/store";
 import { THEME_ENUM } from "../../constants/theme";
-import { SafeContainer, OptionText, Row } from "./OptionsStyled";
+import { SafeContainer, SwitchWrapper } from "./OptionsStyled";
 import { showInstructions } from "../../config/instructionsSlice";
+import { Switch, Subheading } from "react-native-paper";
 
 const Options = ({ theme }) => {
   const clearData = () => {
@@ -41,25 +42,16 @@ const Options = ({ theme }) => {
     }
   };
 
-  const getThemeOption = () => {
-    switch (theme.value) {
-      case THEME_ENUM.DARK:
-        return "Light Mode";
-      case THEME_ENUM.LIGHT:
-        return "Dark Mode";
-      default:
-        return "Change color scheme";
-    }
-  };
-
   return (
     <SafeContainer>
-      <Row onPress={clearData}>
-        <OptionText>Clear data</OptionText>
-      </Row>
-      <Row onPress={switchTheme}>
-        <OptionText>{getThemeOption()}</OptionText>
-      </Row>
+      <SwitchWrapper>
+        <Subheading>Dark Mode</Subheading>
+        <Switch value={theme.value === 0} onValueChange={switchTheme} />
+      </SwitchWrapper>
+      <SwitchWrapper>
+        <Subheading>Clear data</Subheading>
+        <Switch value={false} onValueChange={clearData} />
+      </SwitchWrapper>
     </SafeContainer>
   );
 };

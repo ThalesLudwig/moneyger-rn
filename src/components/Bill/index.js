@@ -23,7 +23,7 @@ const Bill = ({ id, status, title, amount = "0,00", onEdit }) => {
               <BillStatus status={status} />
               <Title>{truncate(title, { length: 48 })}</Title>
             </TitleStatusWrapper>
-            <Amount>R$ {amount || "0.00"}</Amount>
+            <Amount>$ {amount || "0.00"}</Amount>
           </ColumnWrapper>
           <ColumnWrapper>
             <TouchableOpacity onPress={onEdit}>
