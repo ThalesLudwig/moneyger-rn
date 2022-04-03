@@ -4,7 +4,7 @@
   "version": "3.0.0",
   "expo": {
     "name": "Moneyger",
-    "slug": "moneyger",
+    "slug": "paguei",
     "version": "3.0.0",
     "splash": {
       "image": "./src/assets/splash.png",
