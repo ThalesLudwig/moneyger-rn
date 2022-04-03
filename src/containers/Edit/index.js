@@ -2,23 +2,12 @@ import React, { useState } from "react";
 import { Alert } from "react-native";
 import STATUS, { statusName, statusColor } from "../../constants/status";
 import MONTHS from "../../constants/months";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import DateInput from "../../components/DateInput";
 import Pill from "../../components/Pill";
 import { edit, remove } from "../../config/billSlice";
 import store from "../../config/store";
-import toBrazilianReal from "../../utils/toBrazilianReal";
-import {
-  SafeContainer,
-  Container,
-  FormArea,
-  Amount,
-  DateField,
-  Header,
-  ButtonWrapper,
-  PillsWrapper,
-  AmountRow,
-} from "./EditStyled";
+import { TextInput, Button } from "react-native-paper";
+import { SafeContainer, Container, Padding, PillsWrapper, Title } from "./EditStyled";
 
 const Edit = ({ navigation, route }) => {
   const pickerStatus = [
@@ -37,7 +26,6 @@ const Edit = ({ navigation, route }) => {
   );
   const [title, setTitle] = useState(bill.title);
   const [amount, setAmount] = useState(bill.data?.[year]?.[month]?.amount || bill.amount || "");
-  const [hasWarning, setHasWarning] = useState(false);
 
   const shouldShowReceived = status !== STATUS.NOT_RECEIVED;
   const shouldShowPaid = status === STATUS.PAID;
@@ -60,7 +48,7 @@ const Edit = ({ navigation, route }) => {
     return parsedAmount;
   };
 
-  const submit = () => {
+  const onSubmit = () => {
     const newBill = {
       id: bill.id,
       title: title,
@@ -74,7 +62,7 @@ const Edit = ({ navigation, route }) => {
     navigation.navigate("Home");
   };
 
-  const removeBill = () => {
+  const onRemoveBill = () => {
     Alert.alert(
       "Remove bill?",
       "Do you really wish to permanently remove this bill? This cannot be undone.",
@@ -92,67 +80,45 @@ const Edit = ({ navigation, route }) => {
     );
   };
 
-  const onTitleChange = (text) => {
-    setTitle(text);
-    if (text !== bill.title) {
-      setHasWarning(true);
-    } else {
-      setHasWarning(false);
-    }
-  };
-
   return (
     <SafeContainer>
       <Container>
-        <Input
-          icon="file-minus"
-          placeholder="Bill name"
-          onChange={onTitleChange}
-          value={title}
-          helper="This will change every month."
-          hasHelper={hasWarning}
-          fontSize="20px"
-          fontWeight="bold"
-        />
-        <Header>
-          <AmountRow>
-            <Amount>$</Amount>
-            <Input
-              placeholder="0,00"
-              keyboardType="decimal-pad"
-              value={removeDot(amount)}
-              onChange={(value) => setAmount(value)}
-              fontSize="42px"
-              fontWeight="bold"
-            />
-          </AmountRow>
-
-          <DateField>{`${MONTHS[month]} - ${year}`}</DateField>
-        </Header>
-        <FormArea>
-          {shouldShowReceived && (
-            <Input
-              mode="date"
-              icon="calendar"
-              placeholder="Received on"
-              value={receivedOn}
-              title="Received on"
-              onChange={setReceivedOn}
-              label="Received on"
-            />
-          )}
-          {shouldShowPaid && (
-            <Input
-              mode="date"
-              icon="calendar"
-              placeholder="Paid on"
-              value={paidOn}
-              title="Paid on"
-              onChange={setPaidOn}
-              label="Paid on"
-            />
-          )}
-        </FormArea>
+        <Title>{`${MONTHS[month]} - ${year}`}</Title>
+        <Padding>
+          <TextInput
+            placeholder="Bill name"
+            onChangeText={setTitle}
+            value={title}
+            hasBorder
+            label="Bill name"
+            required
+            mode="outlined"
+          />
+        </Padding>
+        <Padding>
+          <TextInput
+            placeholder="0,00"
+            onChangeText={setAmount}
+            value={removeDot(amount)}
+            hasBorder
+            keyboardType="decimal-pad"
+            label="Value"
+            required
+            mode="outlined"
+            left={<TextInput.Icon name="cash-usd-outline" />}
+          />
+        </Padding>
+        {shouldShowReceived && (
+          <Padding>
+            <DateInput placeholder="Received on" value={receivedOn} title="Received on" onChange={setReceivedOn} />
+          </Padding>
+        )}
+        {shouldShowPaid && (
+          <Padding>
+            <DateInput placeholder="Paid on" value={paidOn} title="Paid on" onChange={setPaidOn} />
+          </Padding>
+        )}
+        <Title>Bill status</Title>
         <PillsWrapper>
           <Pill
             value={statusName[STATUS.PAID]}
@@ -173,10 +139,16 @@ const Edit = ({ navigation, route }) => {
             onPress={() => setStatus(STATUS.RECEIVED)}
           />
         </PillsWrapper>
-        <ButtonWrapper>
-          <Button onPress={submit} value="Submit" disabled={title.trim().length === 0} />
-          <Button onPress={removeBill} value="Remove" outlined />
-        </ButtonWrapper>
+        <Padding>
+          <Button onPress={onSubmit} mode="contained" disabled={title.trim().length === 0}>
+            Save changes
+          </Button>
+        </Padding>
+        <Padding>
+          <Button onPress={onRemoveBill} mode="outlined" outlined>
+            Delete Bill
+          </Button>
+        </Padding>
       </Container>
     </SafeContainer>
   );
