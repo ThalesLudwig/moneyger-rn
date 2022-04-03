@@ -1,26 +1,24 @@
 {
-  "name": "Paguei",
-  "displayName": "Paguei",
-  "version": "2.0.0",
+  "name": "Moneyger",
+  "displayName": "Moneyger",
+  "version": "3.0.0",
   "expo": {
-    "name": "Paguei",
-    "slug": "paguei",
-    "version": "2.0.0",
+    "name": "Moneyger",
+    "slug": "moneyger",
+    "version": "3.0.0",
     "splash": {
       "image": "./src/assets/splash.png",
-      "backgroundColor": "#390ebe",
+      "backgroundColor": "#90d4cc",
       "resizeMode": "contain"
     },
     "icon": "./src/assets/icon.png",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.valentini.ludwig.thales"
     },
     "android": {
       "package": "com.valentini.ludwig.thales",
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
