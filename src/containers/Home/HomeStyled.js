@@ -20,7 +20,7 @@ export const ContentWrapper = styled.View`
   width: 100%;
   max-width: 600px;
   padding: 0px 25px;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 `;
 
 export const Empty = styled.Image.attrs({

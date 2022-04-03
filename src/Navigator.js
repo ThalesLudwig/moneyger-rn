@@ -65,10 +65,13 @@ const MainNavigator = ({ theme }) => {
       }}
       backBehavior="history"
       appearance={{
-        floating: true,
+        // floating: true,
         tabBarBackground: theme.NAVIGATION,
         bottomPadding: 15,
         topPadding: 15,
+        shadow: true,
+        dotCornerRadius: 10,
+        dotSize: "small",
       }}
     >
       <Tab.Screen name="Home" component={withTheme(HomeNavigator)} options={getRouteIcon("Home", theme.ICONS)} />
